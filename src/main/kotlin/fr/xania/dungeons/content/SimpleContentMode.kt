@@ -38,8 +38,8 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
                 editMeta { meta ->
                     meta.name = "<aqua>Selection"
                     meta.loreString = """
-                        <gray><white>Right-click</white> to select the first corner.</gray>
                         <gray><white>Left-click</white> to select the second corner.</gray>
+                        <gray><white>Right-click</white> to select the first corner.</gray>
                         <gray><white>Shift + Left-click</white> to save the room.</gray>
                     """.trimIndent()
                 }
@@ -47,8 +47,22 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
                 TODO("Implement selection and saving logic")
             }
 
+            val doorsItem = ItemStack(Material.WARPED_DOOR).apply {
+                editMeta { meta ->
+                    meta.name = "<aqua>Doors"
+                    meta.loreString = """
+                        <gray><white>Left-click</white> to place an incoming door.</gray>
+                        <gray><white>Right-click</white> to place an outgoing door.</gray>
+                        <gray><white>Shift + Left-click</white> to remove the door.</gray>
+                    """.trimIndent()
+                }
+            } onInteract {
+                TODO("Implement doors concept")
+            }
+
             return mapOf(
-                2 to selectionItem
+                3 to selectionItem,
+                6 to doorsItem
             )
         }
 
