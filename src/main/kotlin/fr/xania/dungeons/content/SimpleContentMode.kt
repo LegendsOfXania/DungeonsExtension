@@ -5,12 +5,14 @@ import com.typewritermc.engine.paper.content.ContentComponent
 import com.typewritermc.engine.paper.content.ContentContext
 import com.typewritermc.engine.paper.content.ContentMode
 import com.typewritermc.engine.paper.content.components.IntractableItem
+import com.typewritermc.engine.paper.content.components.ItemInteractionType
 import com.typewritermc.engine.paper.content.components.ItemsComponent
 import com.typewritermc.engine.paper.content.components.bossBar
 import com.typewritermc.engine.paper.content.components.exit
 import com.typewritermc.engine.paper.content.components.onInteract
 import com.typewritermc.engine.paper.utils.loreString
 import com.typewritermc.engine.paper.utils.name
+import fr.xania.dungeons.logic.SavingRoomLogic
 import net.kyori.adventure.bossbar.BossBar
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -36,7 +38,7 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
 
             val selectionItem = ItemStack(Material.BREEZE_ROD).apply {
                 editMeta { meta ->
-                    meta.name = "<aqua>Selection"
+                    meta.name = "<aqua><b>Selection</b>"
                     meta.loreString = """
                         <gray><white>Left-click</white> to select the second corner.</gray>
                         <gray><white>Right-click</white> to select the first corner.</gray>
@@ -44,12 +46,19 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
                     """.trimIndent()
                 }
             } onInteract {
-                TODO("Implement selection and saving logic")
+                val location = it.clickedBlock?.location ?: player.location
+
+                when (it.type) {
+                    ItemInteractionType.LEFT_CLICK -> SavingRoomLogic.selectCorner(location, true, player)
+                    ItemInteractionType.RIGHT_CLICK -> SavingRoomLogic.selectCorner(location, false, player)
+                    ItemInteractionType.SHIFT_LEFT_CLICK -> SavingRoomLogic.saveRoom(player)
+                    else -> return@onInteract
+                }
             }
 
-            val doorsItem = ItemStack(Material.WARPED_DOOR).apply {
+            val doorsItem = ItemStack(Material.STRUCTURE_VOID).apply {
                 editMeta { meta ->
-                    meta.name = "<aqua>Doors"
+                    meta.name = "<aqua><b>Doors</b>"
                     meta.loreString = """
                         <gray><white>Left-click</white> to place an incoming door.</gray>
                         <gray><white>Right-click</white> to place an outgoing door.</gray>
@@ -62,7 +71,7 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
 
             return mapOf(
                 3 to selectionItem,
-                6 to doorsItem
+                5 to doorsItem
             )
         }
 
