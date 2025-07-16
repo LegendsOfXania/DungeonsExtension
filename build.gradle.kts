@@ -1,10 +1,13 @@
 plugins {
     kotlin("jvm") version "2.0.21"
     id("com.typewritermc.module-plugin") version "1.3.0"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
 }
 
 repositories {}
-dependencies {}
+dependencies {
+    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
+}
 
 
 group = "fr.xania"
@@ -34,3 +37,5 @@ typewriter {
 kotlin {
     jvmToolchain(21)
 }
+
+paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
