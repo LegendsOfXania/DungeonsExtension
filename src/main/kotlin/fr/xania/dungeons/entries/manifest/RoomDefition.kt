@@ -8,6 +8,7 @@ import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.ManifestEntry
 import fr.xania.dungeons.entries.static.RoomArtifact
+import org.bukkit.block.structure.StructureRotation
 
 @Entry(
     "room_definition",
@@ -31,7 +32,9 @@ class RoomDefinition (
     @Help("The artifact that contains the room's data.")
     val artifact: Ref<RoomArtifact> = emptyRef(),
     @Help("The direction in which the room will be generated.")
-    val direction: Direction = Direction.NORTH
+    val direction: Direction = Direction.NORTH,
+    @Help("The rotation of the room when it is generated.")
+    val rotation: StructureRotation = StructureRotation.NONE
 ) : ManifestEntry
 
 enum class Direction{
