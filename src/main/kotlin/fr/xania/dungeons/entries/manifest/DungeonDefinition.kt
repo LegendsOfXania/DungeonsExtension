@@ -2,6 +2,7 @@ package fr.xania.dungeons.entries.manifest
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
+import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
@@ -25,5 +26,5 @@ class DungeonDefinition (
     override val id: String = "",
     override val name: String = "",
     @Help("The first room of the dungeon.")
-    val children: List<Ref<RoomDefinition>> = emptyList()
+    val children: Ref<RoomDefinition> = emptyRef()
 ) : ManifestEntry
