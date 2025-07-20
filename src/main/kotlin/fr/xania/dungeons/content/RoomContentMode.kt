@@ -14,14 +14,13 @@ import com.typewritermc.engine.paper.content.entryId
 import com.typewritermc.engine.paper.utils.loreString
 import com.typewritermc.engine.paper.utils.msg
 import com.typewritermc.engine.paper.utils.name
-import fr.xania.dungeons.logic.rooms.Saving
 import net.kyori.adventure.bossbar.BossBar
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(context, player) {
+class RoomContentMode(context: ContentContext, player: Player) : ContentMode(context, player) {
     override suspend fun setup(): Result<Unit> {
         val id = context.entryId ?: "unknown"
 
@@ -38,7 +37,7 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
     }
 
     private class SimpleItems(
-        private val roomID: String
+        private val artifactId: String
     ) : ContentComponent, ItemsComponent {
         override fun items(player: Player): Map<Int, IntractableItem> {
             var playerCorners = Pair<Location?, Location?>(null, null)
@@ -57,11 +56,11 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
 
                 when (it.type) {
                     ItemInteractionType.LEFT_CLICK -> {
-                        val firstCorner = Saving.selectCorner(player, location, true)
+                        val firstCorner = Saving().selectCorner(player, location, true)
                         playerCorners = playerCorners.copy(first = firstCorner)
                     }
                     ItemInteractionType.RIGHT_CLICK -> {
-                        val secondCorner = Saving.selectCorner(player, location, false)
+                        val secondCorner = Saving().selectCorner(player, location, false)
                         playerCorners = playerCorners.copy(second = secondCorner)
                     }
                     ItemInteractionType.SHIFT_RIGHT_CLICK -> {
@@ -72,7 +71,7 @@ class SimpleContentMode(context: ContentContext, player: Player) : ContentMode(c
                         if (firstCorner!!.world != secondCorner!!.world) {
                             player.msg("The corners must be in the same world.")
                         }
-                        Saving.savingRoom(player, firstCorner, secondCorner, roomID)
+                        Saving().savingRoom(player, firstCorner, secondCorner, artifactId)
                     }
                     else -> return@onInteract
                 }

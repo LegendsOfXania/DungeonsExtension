@@ -5,19 +5,25 @@ import com.typewritermc.core.extension.annotations.ContentEditor
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
-import com.typewritermc.engine.paper.entry.entries.AssetEntry
-import fr.xania.dungeons.content.SimpleContentMode
+import fr.xania.dungeons.content.RoomContentMode
 
 @Entry(
-    "simple_room_definition",
-    "The definition of a simple room",
-     Colors.ORANGE,
-    "pajamas:file-addition"
-)
-@Tags("simple_room_definition")
-class SimpleRoomDefinitionArtifactEntry (
+    "room_artifact",
+    "The artifact of a dungeon room",
+    Colors.PINK,
+    "tabler:building-bridge-2")
+@Tags("room_artifact")
+/**
+ * The `Room Artifact` entry is used to store the room's data.
+ *
+ * ## How could this be used?
+ *
+ * This could be used to store the room's data for a Room Definition.
+ */
+
+class RoomArtifact (
     override val id: String = "",
     override val name: String = "",
-    @ContentEditor(SimpleContentMode::class)
+    @ContentEditor(RoomContentMode::class)
     override val artifactId: String = "",
 ) : ArtifactEntry

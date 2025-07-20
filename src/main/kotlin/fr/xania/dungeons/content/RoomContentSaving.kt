@@ -1,4 +1,5 @@
-package fr.xania.dungeons.logic.rooms
+package fr.xania.dungeons.content
+
 
 import com.typewritermc.engine.paper.utils.msg
 import kotlinx.serialization.Serializable
@@ -23,11 +24,10 @@ data class Block(
 
 @Serializable
 data class Room(
-    val id: String,
     val blocks: List<Block>
 )
 
-object Saving {
+class Saving {
     private val json = Json { prettyPrint = true }
 
     private fun serializeBlockState(state: TileState): String {
@@ -40,8 +40,7 @@ object Saving {
         } else ""
     }
 
-
-    fun savingRoom(player: Player, p0: Location, p1: Location, id: String) {
+    fun savingRoom(player: Player, p0: Location, p1: Location, artifactId: String) {
         val world = p0.world ?: return
 
         val minX = minOf(p0.blockX, p1.blockX)
@@ -77,15 +76,15 @@ object Saving {
             }
         }
 
-        val room = Room(id = id, blocks = blocks)
+        val room = Room(blocks = blocks)
 
         val outputFolder = File("plugins/Typewriter/assets/artifacts")
         outputFolder.mkdirs()
 
-        val outputFile = File(outputFolder, "$id.json")
+        val outputFile = File(outputFolder, "$artifactId.json")
         outputFile.writeText(json.encodeToString(room))
 
-        player.msg("Room <blue>$id</blue> saved successfully.")
+        player.msg("Room <blue>$artifactId</blue> saved successfully.")
     }
 
 
