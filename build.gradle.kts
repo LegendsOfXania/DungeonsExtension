@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
-    kotlin("plugin.serialization") version "2.0.21"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.serialization") version "2.1.0"
     id("com.typewritermc.module-plugin") version "1.3.0"
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
 }
