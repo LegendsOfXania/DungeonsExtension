@@ -86,7 +86,7 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
             return Pair(4, selectionItem)
         }
 
-        fun Location.blockCoords() = "$blockX, $blockY, $blockZ"
+        private fun Location.blockCoords() = "$blockX, $blockY, $blockZ"
 
         private fun saveRoom(player: Player, corner1: Location?, corner2: Location?) {
             if (corner1 == null || corner2 == null) {
