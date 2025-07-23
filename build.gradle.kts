@@ -1,20 +1,12 @@
 plugins {
     /* Kotlin */
     kotlin("jvm") version "2.0.21"
-    kotlin("plugin.serialization") version "2.0.21"
     /* Typewriter */
     id("com.typewritermc.module-plugin") version "1.3.0"
-    /* Paperweight */
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.18"
 }
 
 repositories {}
-dependencies {
-    /* Kotlin (serialization) */
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    /* Paperweight */
-    paperweight.paperDevBundle("1.21.3-R0.1-SNAPSHOT")
-}
+dependencies {}
 
 
 group = "fr.xania"
@@ -44,5 +36,3 @@ typewriter {
 kotlin {
     jvmToolchain(21)
 }
-
-paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
