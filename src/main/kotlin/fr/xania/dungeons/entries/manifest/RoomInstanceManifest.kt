@@ -11,30 +11,30 @@ import fr.xania.dungeons.entries.static.RoomArtifact
 import org.bukkit.block.structure.StructureRotation
 
 @Entry(
-    "room_definition",
-    "The definition of a dungeon room",
+    "room_Instance",
+    "The Instance of a dungeon room",
     Colors.YELLOW,
     "tabler:building-arch"
 )
-@Tags("room_defition")
+@Tags("room_instance")
 /**
- * The `RoomDefinition` entry is used to define a room in a dungeon.
+ * The `RoomInstance` entry is used to define a room in a dungeon.
  *
  * ## How could this be used?
  *
  * This could be used to define a room in a dungeon, including its next room(s), artifact, and direction.
  */
-class RoomDefinition (
+class RoomInstance (
     override val id: String = "",
     override val name: String = "",
     @Help("The next room(s) of the dungeon. Leave empty if this is the last room.")
-    val children: List<Ref<RoomDefinition>> = emptyList(),
+    val children: List<Ref<RoomInstance>> = emptyList(),
     @Help("The artifact that contains the room's data.")
     val artifact: Ref<RoomArtifact> = emptyRef(),
     @Help("The direction in which the room will be generated.")
     val direction: Direction = Direction.NORTH,
     @Help("The rotation of the room when it is generated.")
-    val rotation: StructureRotation = StructureRotation.NONE
+    val rotation: StructureRotation = StructureRotation.NONE,
 ) : ManifestEntry
 
 enum class Direction{
