@@ -3,6 +3,7 @@ package fr.xania.dungeons.entries.action
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.entries.emptyRef
+import com.typewritermc.core.entries.priority
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.engine.paper.entry.Criteria
@@ -10,16 +11,18 @@ import com.typewritermc.engine.paper.entry.Modifier
 import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.ActionEntry
 import com.typewritermc.engine.paper.entry.entries.ActionTrigger
-import fr.xania.dungeons.entries.manifest.DungeonDefinition
+import com.typewritermc.engine.paper.entry.entries.EventTrigger
+import fr.xania.dungeons.entries.manifest.DungeonInstance
+import fr.xania.dungeons.interaction.dungeon.DungeonStartTrigger
 
 @Entry(
     "start_dungeon_action",
-    "Start a dungeon for a group",
+    "Start a dungeon",
     Colors.RED,
     "carbon:build-image"
 )
 /**
- * The `StartDungeonAction` entry is used to start a dungeon for a group.
+ * The `StartDungeonAction` entry is used to start a dungeon.
  *
  * ## How could this be used?
  *
@@ -33,9 +36,15 @@ class StartDungeonAction (
     override val modifiers: List<Modifier> = emptyList(),
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
     @Help("The dungeon to start.")
-    val dungeon: Ref<DungeonDefinition> = emptyRef()
+    val dungeon: Ref<DungeonInstance> = emptyRef(),
 ) : ActionEntry {
-    override fun ActionTrigger.execute() {
-        // Do something with the player
-    }
+    override val eventTriggers: List<EventTrigger>
+        get() = listOf(
+            DungeonStartTrigger(
+                this.priority,
+                super.eventTriggers
+            )
+        )
+
+    override fun ActionTrigger.execute() {}
 }
