@@ -1,4 +1,4 @@
-package fr.xania.dungeons.content
+package fr.xania.dungeons.interaction.content
 
 import com.typewritermc.core.entries.Query
 import com.typewritermc.core.utils.UntickedAsync
