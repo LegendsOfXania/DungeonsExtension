@@ -103,7 +103,7 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
                 val structure = server.structureManager.createStructure()
                 structure.fill(corner1, corner2, true)
 
-                val tempFile = File.createTempFile("plugins/Typewriter/temp/room", ".nbt")
+                val tempFile = File.createTempFile("plugins/Typewriter/.temp/${entry.artifactId}", ".nbt")
                 server.structureManager.saveStructure(tempFile, structure)
 
                 val assetManager = KoinJavaComponent.get<AssetManager>(AssetManager::class.java)
