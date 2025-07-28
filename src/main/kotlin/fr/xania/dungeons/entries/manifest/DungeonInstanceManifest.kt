@@ -9,7 +9,7 @@ import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.ManifestEntry
 
 @Entry(
-    "dungeon_Instance",
+    "dungeon_instance",
     "The Instance of a dungeon",
      Colors.ORANGE,
     "tabler:building"

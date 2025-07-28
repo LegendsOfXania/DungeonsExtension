@@ -42,7 +42,8 @@ class StartDungeonAction (
         get() = listOf(
             DungeonStartTrigger(
                 this.priority,
-                super.eventTriggers
+                super.eventTriggers,
+                dungeon
             )
         )
 

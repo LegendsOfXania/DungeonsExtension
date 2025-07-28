@@ -56,9 +56,9 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
                 editMeta { meta ->
                     meta.name = "<aqua><b>Selection</b>"
                     meta.loreString = """
-            <gray><white>Left-click</white> to select the second corner.</gray>
-            <gray><white>Right-click</white> to select the first corner.</gray>
-            <gray><white>Shift + Left-click</white> to save the room.</gray>
+            <gray><white><b>Left-click</b></white> to select the first corner.</gray>
+            <gray><white><b>Right-click</b></white> to select the second corner.</gray>
+            <gray><white><b>Shift + Left-click</b></white> to save the room.</gray>
         """.trimIndent()
                 }
             } onInteract { event ->

@@ -35,7 +35,8 @@ class DungeonTriggerHandler : TriggerHandler {
                 event.player,
                 event.context,
                 trigger.priority,
-                trigger.eventTriggers
+                trigger.eventTriggers,
+                trigger.dungeon
             )
         )
     }

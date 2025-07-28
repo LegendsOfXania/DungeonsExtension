@@ -11,7 +11,7 @@ import fr.xania.dungeons.entries.static.RoomArtifact
 import org.bukkit.block.structure.StructureRotation
 
 @Entry(
-    "room_Instance",
+    "room_instance",
     "The Instance of a dungeon room",
     Colors.YELLOW,
     "tabler:building-arch"

@@ -3,20 +3,26 @@ package fr.xania.dungeons.manager
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.config
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.WorldType
-import java.io.File
 
 object WorldManager {
-    val worldName: String by config("dungeon", "dungeons", "The name of the world where dungeons will be generated")
+    val worldName: String by config("dungeons.world.name", "dungeons", "The name of the world where dungeons will be generated")
+    val instanceSpacing: Int by config("dungeons.world.instanceSpacing", 1000, "The spacing between dungeon instances in the dungeons world")
+    val gridWidth: Int by config("dungeons.world.gridWidth", 30, "The number of instances per row in the grid")
+    val baseY: Int by config("dungeons.world.baseY", 0, "The base Y level for dungeon instances in the dungeons world")
+
+    private val usedInstances = mutableSetOf<Int>()
+    private val availableIndexes = mutableListOf<Int>()
 
     fun worldCreate(): World? {
         if (worldExists()) return Bukkit.getWorld(worldName)
 
         val creator = WorldCreator(worldName)
             .type(WorldType.FLAT)
-            .generatorSettings("minecraft:air")
+            .generatorSettings("{\"layers\":[],\"biome\":\"minecraft:plains\",\"structures\":{}}")
             .generateStructures(false)
             .environment(World.Environment.NORMAL)
 
@@ -25,22 +31,37 @@ object WorldManager {
         }
     }
 
-    fun worldLoad(): World? {
-        if (Bukkit.getWorld(worldName) != null) return Bukkit.getWorld(worldName)
+    fun worldExists(): Boolean = Bukkit.getWorld(worldName) != null
 
-        val worldFolder = File(Bukkit.getWorldContainer(), worldName)
-        if (!worldFolder.exists() || !File(worldFolder, "level.dat").exists()) return null
+    fun startDungeonInstance(): Location {
+        val world = Bukkit.getWorld(worldName) ?: throw IllegalStateException("World '$worldName' does not exist.")
 
-        return WorldCreator(worldName).createWorld()?.also {
-            logger.info("World \"$worldName\" loaded successfully.")
+        val index = getAvailableIndex()
+        usedInstances.add(index)
+
+        val x = (index % gridWidth) * instanceSpacing
+        val z = (index / gridWidth) * instanceSpacing
+
+        val location = Location(world, x.toDouble(), baseY.toDouble(), z.toDouble())
+
+        return location
+    }
+
+    fun stopDungeonInstance(location: Location) {
+        val xIndex = location.blockX / instanceSpacing
+        val zIndex = location.blockZ / instanceSpacing
+        val index = zIndex * gridWidth + xIndex
+
+        if (usedInstances.remove(index)) {
+            availableIndexes.add(index)
         }
     }
 
-    fun worldExists(): Boolean = Bukkit.getWorld(worldName) != null
-
-    fun worldIsLoaded(): Boolean = Bukkit.getWorld(worldName) != null
-
-    fun worldHasPlayers(): Boolean = Bukkit.getWorld(worldName)?.players?.isNotEmpty() == true
-
-    fun worldUnLoad(): Boolean = Bukkit.unloadWorld(worldName, true)
+    private fun getAvailableIndex(): Int {
+        return if (availableIndexes.isNotEmpty()) {
+            availableIndexes.removeFirst()
+        } else {
+            (usedInstances.maxOrNull() ?: -1) + 1
+        }
+    }
 }
