@@ -1,4 +1,4 @@
-package fr.xania.dungeons.interaction.dungeon
+package fr.legendsofxania.dungeons.interaction.dungeon
 
 import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.core.interaction.Interaction

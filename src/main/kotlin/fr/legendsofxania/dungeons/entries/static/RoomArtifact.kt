@@ -1,11 +1,11 @@
-package fr.xania.dungeons.entries.static
+package fr.legendsofxania.dungeons.entries.static
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.extension.annotations.ContentEditor
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
-import fr.xania.dungeons.interaction.content.RoomContentMode
+import fr.legendsofxania.dungeons.interaction.content.RoomContentMode
 
 @Entry(
     "room_artifact",

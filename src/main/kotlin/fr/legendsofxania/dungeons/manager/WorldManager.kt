@@ -1,4 +1,4 @@
-package fr.xania.dungeons.manager
+package fr.legendsofxania.dungeons.manager
 
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.config

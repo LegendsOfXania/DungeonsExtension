@@ -1,14 +1,14 @@
-package fr.xania.dungeons.manager
+package fr.legendsofxania.dungeons.manager
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.utils.launch
 import com.typewritermc.engine.paper.entry.AssetManager
 import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.server
-import fr.xania.dungeons.entries.`entry-types`.Direction
-import fr.xania.dungeons.entries.manifest.DungeonInstance
-import fr.xania.dungeons.entries.manifest.RoomInstance
-import fr.xania.dungeons.entries.static.RoomArtifact
+import fr.legendsofxania.dungeons.entries.`entry-types`.Direction
+import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
+import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
+import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bukkit.Location

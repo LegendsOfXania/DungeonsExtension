@@ -1,4 +1,4 @@
-package fr.xania.dungeons.interaction.dungeon
+package fr.legendsofxania.dungeons.interaction.dungeon
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.entries.emptyRef
@@ -7,8 +7,8 @@ import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
-import fr.xania.dungeons.entries.manifest.DungeonInstance
-import fr.xania.dungeons.manager.DungeonManager
+import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
+import fr.legendsofxania.dungeons.manager.DungeonManager
 import org.bukkit.entity.Player
 import java.time.Duration
 

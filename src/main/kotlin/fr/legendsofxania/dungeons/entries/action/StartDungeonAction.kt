@@ -1,4 +1,4 @@
-package fr.xania.dungeons.entries.action
+package fr.legendsofxania.dungeons.entries.action
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
@@ -12,8 +12,8 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.ActionEntry
 import com.typewritermc.engine.paper.entry.entries.ActionTrigger
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
-import fr.xania.dungeons.entries.manifest.DungeonInstance
-import fr.xania.dungeons.interaction.dungeon.DungeonStartTrigger
+import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
+import fr.legendsofxania.dungeons.interaction.dungeon.DungeonStartTrigger
 
 @Entry(
     "start_dungeon_action",

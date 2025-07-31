@@ -1,11 +1,11 @@
-package fr.xania.dungeons.entries.manifest
+package fr.legendsofxania.dungeons.entries.manifest
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Tags
-import fr.xania.dungeons.entries.`entry-types`.DungeonInstanceEntry
+import fr.legendsofxania.dungeons.entries.`entry-types`.DungeonInstanceEntry
 
 @Entry(
     "dungeon_instance",
