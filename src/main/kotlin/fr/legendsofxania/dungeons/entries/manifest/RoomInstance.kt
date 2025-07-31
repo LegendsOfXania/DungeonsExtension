@@ -7,8 +7,8 @@ import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
 import fr.legendsofxania.dungeons.entries.static.RoomArtifact
-import fr.legendsofxania.dungeons.entries.`entry-types`.Direction
-import fr.legendsofxania.dungeons.entries.`entry-types`.RoomInstanceEntry
+import fr.legendsofxania.dungeons.entries.entrytypes.Direction
+import fr.legendsofxania.dungeons.entries.entrytypes.RoomInstanceEntry
 
 @Entry(
     "room_instance",

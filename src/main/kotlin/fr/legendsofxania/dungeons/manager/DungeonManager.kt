@@ -5,7 +5,7 @@ import com.typewritermc.core.utils.launch
 import com.typewritermc.engine.paper.entry.AssetManager
 import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.server
-import fr.legendsofxania.dungeons.entries.`entry-types`.Direction
+import fr.legendsofxania.dungeons.entries.entrytypes.Direction
 import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
 import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
 import fr.legendsofxania.dungeons.entries.static.RoomArtifact

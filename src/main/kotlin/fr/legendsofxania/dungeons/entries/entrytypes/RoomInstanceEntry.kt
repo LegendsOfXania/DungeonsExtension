@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.`entry-types`
+package fr.legendsofxania.dungeons.entries.entrytypes
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Help
@@ -6,7 +6,6 @@ import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.ManifestEntry
 import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
 import fr.legendsofxania.dungeons.entries.static.RoomArtifact
-import org.bukkit.block.structure.StructureRotation
 
 @Tags("room_instance")
 interface RoomInstanceEntry : ManifestEntry {

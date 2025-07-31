@@ -5,7 +5,7 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Tags
-import fr.legendsofxania.dungeons.entries.`entry-types`.DungeonInstanceEntry
+import fr.legendsofxania.dungeons.entries.entrytypes.DungeonInstanceEntry
 
 @Entry(
     "dungeon_instance",

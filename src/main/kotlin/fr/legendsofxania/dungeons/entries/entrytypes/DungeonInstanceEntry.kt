@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.`entry-types`
+package fr.legendsofxania.dungeons.entries.entrytypes
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Help
