@@ -6,9 +6,9 @@ import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
-import com.typewritermc.engine.paper.entry.ManifestEntry
 import fr.xania.dungeons.entries.static.RoomArtifact
-import org.bukkit.block.structure.StructureRotation
+import fr.xania.dungeons.entries.`entry-types`.Direction
+import fr.xania.dungeons.entries.`entry-types`.RoomInstanceEntry
 
 @Entry(
     "room_instance",
@@ -28,20 +28,10 @@ class RoomInstance (
     override val id: String = "",
     override val name: String = "",
     @Help("The next room(s) of the dungeon. Leave empty if this is the last room.")
-    val children: List<Ref<RoomInstance>> = emptyList(),
+    override val children: List<Ref<RoomInstance>> = emptyList(),
     @Help("The artifact that contains the room's data.")
-    val artifact: Ref<RoomArtifact> = emptyRef(),
+    override val artifact: Ref<RoomArtifact> = emptyRef(),
     @Help("The direction in which the room will be generated.")
-    val direction: Direction = Direction.NORTH,
-    @Help("The rotation of the room when it is generated.")
-    val rotation: StructureRotation = StructureRotation.NONE,
-) : ManifestEntry
+    override val direction: Direction = Direction.NORTH,
+) : RoomInstanceEntry
 
-enum class Direction{
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST,
-    UP,
-    DOWN
-}

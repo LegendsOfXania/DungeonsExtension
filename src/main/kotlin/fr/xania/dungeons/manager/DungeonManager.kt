@@ -5,48 +5,64 @@ import com.typewritermc.core.utils.launch
 import com.typewritermc.engine.paper.entry.AssetManager
 import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.server
+import fr.xania.dungeons.entries.`entry-types`.Direction
 import fr.xania.dungeons.entries.manifest.DungeonInstance
 import fr.xania.dungeons.entries.manifest.RoomInstance
 import fr.xania.dungeons.entries.static.RoomArtifact
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.bukkit.Location
 import org.bukkit.block.structure.Mirror
+import org.bukkit.block.structure.StructureRotation
 import org.bukkit.structure.Structure
+import org.bukkit.util.Vector
 import org.koin.java.KoinJavaComponent
 import java.io.File
 import java.util.Random
 
 object DungeonManager {
+
     suspend fun initialize(dungeon: Ref<DungeonInstance>) {
         withContext(Dispatchers.Sync) {
             if (!WorldManager.worldExists()) WorldManager.worldCreate()
         }
 
-        val dungeonEntry = dungeon.entry?.children ?: return
+        val dungeonEntry = dungeon.entry ?: return
+        val baseLocation = WorldManager.startDungeonInstance()
+        val placedRooms = mutableMapOf<String, Location>()
 
-        placeFirstRoom(dungeonEntry)
+        placeRoomRecursively(dungeonEntry.child, placedRooms, baseLocation)
     }
 
-    private suspend fun placeFirstRoom(roomInstance: Ref<RoomInstance>) {
-
-        val roomArtifact = roomInstance.entry!!.artifact
+    private suspend fun placeRoomRecursively(
+        roomInstance: Ref<RoomInstance>,
+        placedRooms: MutableMap<String, Location>,
+        currentLocation: Location
+    ) {
         val roomEntry = roomInstance.entry ?: return
+        val artifact = roomEntry.artifact
+        val structure = loadRoom(artifact) ?: return
 
-        val structure = loadRoom(roomArtifact)!!
-        val location = WorldManager.startDungeonInstance()
-        val direction = roomEntry.direction
-        val rotation = roomEntry.rotation
+        val roomSize = getStructureSize(structure)
+        val offset = getOffsetFromDirection(roomEntry.direction, roomSize)
+        val roomLocation = currentLocation.clone().add(offset)
 
         Dispatchers.Sync.launch {
             structure.place(
-                location,
+                roomLocation,
                 true,
-                rotation,
+                StructureRotation.NONE,
                 Mirror.NONE,
                 0,
                 1f,
                 Random()
             )
+        }
+
+        placedRooms[roomEntry.id] = roomLocation
+
+        for (child in roomEntry.children) {
+            placeRoomRecursively(child, placedRooms, roomLocation)
         }
     }
 
@@ -64,6 +80,22 @@ object DungeonManager {
 
         return structure.also {
             tempFile.delete()
+        }
+    }
+
+    private fun getStructureSize(structure: Structure): Vector {
+        val size = structure.size
+        return Vector(size.blockX, size.blockY, size.blockZ)
+    }
+
+    private fun getOffsetFromDirection(direction: Direction, size: Vector): Vector {
+        return when (direction) {
+            Direction.NORTH -> Vector(0.0, 0.0, -size.z)
+            Direction.SOUTH -> Vector(0.0, 0.0, size.z)
+            Direction.EAST  -> Vector(size.x, 0.0, 0.0)
+            Direction.WEST  -> Vector(-size.x, 0.0, 0.0)
+            Direction.UP    -> Vector(0.0, size.y, 0.0)
+            Direction.DOWN  -> Vector(0.0, -size.y, 0.0)
         }
     }
 }
