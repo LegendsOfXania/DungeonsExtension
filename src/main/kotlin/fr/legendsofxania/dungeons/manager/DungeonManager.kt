@@ -43,7 +43,7 @@ object DungeonManager {
         val artifact = roomEntry.artifact
         val structure = loadRoom(artifact) ?: return
 
-        val roomSize = getStructureSize(structure)
+        val roomSize = structure.size
         val offset = getOffsetFromDirection(roomEntry.direction, roomSize)
         val roomLocation = currentLocation.clone().add(offset)
 
@@ -81,11 +81,6 @@ object DungeonManager {
         return structure.also {
             tempFile.delete()
         }
-    }
-
-    private fun getStructureSize(structure: Structure): Vector {
-        val size = structure.size
-        return Vector(size.blockX, size.blockY, size.blockZ)
     }
 
     private fun getOffsetFromDirection(direction: Direction, size: Vector): Vector {
