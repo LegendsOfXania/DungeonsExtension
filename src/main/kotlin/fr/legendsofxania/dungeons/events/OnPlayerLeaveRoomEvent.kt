@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList
 
 class OnPlayerLeaveRoomEvent(
     val player: Player,
-    val dungeon: Ref<RoomInstance>
+    val room: Ref<RoomInstance>
 ) : Event() {
 
     companion object {
