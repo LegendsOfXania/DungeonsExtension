@@ -11,6 +11,7 @@ import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
 import fr.legendsofxania.dungeons.events.OnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.OnPlayerLeaveDungeonEvent
 import fr.legendsofxania.dungeons.manager.DungeonManager
+import fr.legendsofxania.dungeons.manager.PlayerManager
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.time.Duration
@@ -25,8 +26,7 @@ class DungeonInteraction(
     override suspend fun initialize(): Result<Unit> {
 
         DungeonManager.initialize(dungeon)
-
-        Bukkit.getPluginManager().callEvent(OnPlayerJoinDungeonEvent(player, dungeon))
+        PlayerManager.joinDungeon(player, dungeon)
 
         player.sendMessage("Starting interaction!")
 
@@ -43,7 +43,7 @@ class DungeonInteraction(
 
     override suspend fun teardown(force: Boolean) {
 
-        Bukkit.getPluginManager().callEvent(OnPlayerLeaveDungeonEvent(player, dungeon))
+        PlayerManager.leaveDungeon(player, dungeon)
 
         player.sendMessage("Ending interaction!")
     }
