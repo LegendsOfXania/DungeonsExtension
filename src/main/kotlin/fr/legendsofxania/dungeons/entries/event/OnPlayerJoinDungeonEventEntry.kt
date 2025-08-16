@@ -40,5 +40,4 @@ fun onPlayerJoinDungeonEventListener(
 ) {
     val dungeon = event.dungeon
     query.findWhere { it.dungeon == dungeon }.triggerAllFor(event.player, context())
-
 }

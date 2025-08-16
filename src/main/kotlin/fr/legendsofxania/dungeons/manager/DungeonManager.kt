@@ -1,6 +1,7 @@
 package fr.legendsofxania.dungeons.manager
 
 import com.typewritermc.core.entries.Ref
+import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.core.utils.launch
 import com.typewritermc.engine.paper.entry.AssetManager
 import com.typewritermc.engine.paper.utils.Sync
@@ -14,6 +15,7 @@ import kotlinx.coroutines.withContext
 import org.bukkit.Location
 import org.bukkit.block.structure.Mirror
 import org.bukkit.block.structure.StructureRotation
+import org.bukkit.entity.Player
 import org.bukkit.structure.Structure
 import org.bukkit.util.Vector
 import org.koin.java.KoinJavaComponent
@@ -22,7 +24,11 @@ import java.util.Random
 
 object DungeonManager {
 
-    suspend fun initialize(dungeon: Ref<DungeonInstance>) {
+    suspend fun initialize(
+        player: Player,
+        context: InteractionContext,
+        dungeon: Ref<DungeonInstance>
+    ) {
         withContext(Dispatchers.Sync) {
             if (!WorldManager.worldExists()) WorldManager.worldCreate()
         }
@@ -31,20 +37,22 @@ object DungeonManager {
         val baseLocation = WorldManager.startDungeonInstance()
         val placedRooms = mutableMapOf<String, Location>()
 
-        placeRoomRecursively(dungeonEntry.child, placedRooms, baseLocation)
+        placeRoomRecursively(player, context, dungeonEntry.child, placedRooms, baseLocation)
     }
 
     private suspend fun placeRoomRecursively(
+        player: Player,
+        context: InteractionContext,
         roomInstance: Ref<RoomInstance>,
         placedRooms: MutableMap<String, Location>,
         currentLocation: Location
     ) {
         val roomEntry = roomInstance.entry ?: return
         val artifact = roomEntry.artifact
-        val structure = loadRoom(artifact) ?: return
+        val structure = loadRoom(artifact.get(player, context)) ?: return
 
         val roomSize = structure.size
-        val offset = getOffsetFromDirection(roomEntry.direction, roomSize)
+        val offset = getOffsetFromDirection(roomEntry.direction.get(player, context), roomSize)
         val roomLocation = currentLocation.clone().add(offset)
 
         Dispatchers.Sync.launch {
@@ -62,7 +70,7 @@ object DungeonManager {
         placedRooms[roomEntry.id] = roomLocation
 
         for (child in roomEntry.children) {
-            placeRoomRecursively(child, placedRooms, roomLocation)
+            placeRoomRecursively(player, context, child.get(player, context), placedRooms, roomLocation)
         }
     }
 

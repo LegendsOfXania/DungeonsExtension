@@ -6,6 +6,8 @@ import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
+import com.typewritermc.engine.paper.entry.entries.ConstVar
+import com.typewritermc.engine.paper.entry.entries.Var
 import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 import fr.legendsofxania.dungeons.entries.entrytypes.Direction
 import fr.legendsofxania.dungeons.entries.entrytypes.RoomInstanceEntry
@@ -28,10 +30,10 @@ class RoomInstance (
     override val id: String = "",
     override val name: String = "",
     @Help("The next room(s) of the dungeon. Leave empty if this is the last room.")
-    override val children: List<Ref<RoomInstance>> = emptyList(),
+    override val children: List<Var<Ref<RoomInstance>>> = emptyList(),
     @Help("The artifact that contains the room's data.")
-    override val artifact: Ref<RoomArtifact> = emptyRef(),
+    override val artifact: Var<Ref<RoomArtifact>> = ConstVar(emptyRef()),
     @Help("The direction in which the room will be generated.")
-    override val direction: Direction = Direction.NORTH,
+    override val direction: Var<Direction> = ConstVar(Direction.NORTH),
 ) : RoomInstanceEntry
 
