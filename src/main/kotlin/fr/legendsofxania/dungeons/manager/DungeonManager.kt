@@ -29,18 +29,20 @@ object DungeonManager {
         context: InteractionContext,
         dungeon: Ref<DungeonInstance>
     ) {
-        withContext(Dispatchers.Sync) {
-            if (!WorldManager.worldExists()) WorldManager.worldCreate()
+        if (!WorldManager.worldExists()) {
+            withContext(Dispatchers.Sync) {
+                WorldManager.worldCreate()
+            }
         }
 
         val dungeonEntry = dungeon.entry ?: return
         val baseLocation = WorldManager.startDungeonInstance()
         val placedRooms = mutableMapOf<String, Location>()
 
-        placeRoomRecursively(player, context, dungeonEntry.child, placedRooms, baseLocation)
+        placeRooms(player, context, dungeonEntry.child, placedRooms, baseLocation)
     }
 
-    private suspend fun placeRoomRecursively(
+    private suspend fun placeRooms(
         player: Player,
         context: InteractionContext,
         roomInstance: Ref<RoomInstance>,
@@ -70,7 +72,7 @@ object DungeonManager {
         placedRooms[roomEntry.id] = roomLocation
 
         for (child in roomEntry.children) {
-            placeRoomRecursively(player, context, child.get(player, context), placedRooms, roomLocation)
+            placeRooms(player, context, child.get(player, context), placedRooms, roomLocation)
         }
     }
 
