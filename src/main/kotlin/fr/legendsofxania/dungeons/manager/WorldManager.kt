@@ -10,8 +10,6 @@ import org.bukkit.WorldType
 
 object WorldManager {
     val worldName: String by config("dungeons.world.name", "dungeons", "The name of the world where dungeons will be generated")
-    val instanceSpacing: Int by config("dungeons.world.instanceSpacing", 1000, "The spacing between dungeon instances in the dungeons world")
-    val gridWidth: Int by config("dungeons.world.gridWidth", 30, "The number of instances per row in the grid")
     val baseY: Int by config("dungeons.world.baseY", 0, "The base Y level for dungeon instances in the dungeons world")
 
     private val usedInstances = mutableSetOf<Int>()
@@ -39,8 +37,8 @@ object WorldManager {
         val index = getAvailableIndex()
         usedInstances.add(index)
 
-        val x = (index % gridWidth) * instanceSpacing
-        val z = (index / gridWidth) * instanceSpacing
+        val x = (index % 100) * 1000
+        val z = (index / 100) * 1000
 
         val location = Location(world, x.toDouble(), baseY.toDouble(), z.toDouble())
 
@@ -48,9 +46,9 @@ object WorldManager {
     }
 
     fun stopDungeonInstance(location: Location) {
-        val xIndex = location.blockX / instanceSpacing
-        val zIndex = location.blockZ / instanceSpacing
-        val index = zIndex * gridWidth + xIndex
+        val xIndex = location.blockX / 1000
+        val zIndex = location.blockZ / 1000
+        val index = zIndex * 100 + xIndex
 
         if (usedInstances.remove(index)) {
             availableIndexes.add(index)
