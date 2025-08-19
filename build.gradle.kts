@@ -1,8 +1,8 @@
 plugins {
     /* Kotlin */
-    kotlin("jvm") version "2.0.21"
+    kotlin("jvm") version "2.2.10"
     /* Typewriter */
-    id("com.typewritermc.module-plugin") version "1.3.0"
+    id("com.typewritermc.module-plugin") version "2.0.0"
 }
 
 repositories {}
