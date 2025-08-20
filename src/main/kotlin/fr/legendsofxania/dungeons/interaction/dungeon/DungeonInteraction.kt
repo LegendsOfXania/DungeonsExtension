@@ -9,7 +9,6 @@ import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
 import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
 import fr.legendsofxania.dungeons.manager.DungeonManager
-import fr.legendsofxania.dungeons.manager.PlayerManager
 import org.bukkit.entity.Player
 import java.time.Duration
 
@@ -23,7 +22,6 @@ class DungeonInteraction(
     override suspend fun initialize(): Result<Unit> {
 
         DungeonManager.initialize(player, context, dungeon)
-        PlayerManager.joinDungeon(player, dungeon)
 
         player.sendMessage("Starting interaction!")
 
@@ -39,8 +37,6 @@ class DungeonInteraction(
     }
 
     override suspend fun teardown(force: Boolean) {
-
-        PlayerManager.leaveDungeon(player, dungeon)
 
         player.sendMessage("Ending interaction!")
     }
