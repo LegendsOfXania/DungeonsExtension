@@ -2,18 +2,24 @@ package fr.legendsofxania.dungeons.interaction.dungeon
 
 import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.core.interaction.Interaction
+import com.typewritermc.engine.paper.entry.entries.Event
 import com.typewritermc.engine.paper.interaction.TriggerContinuation
 import com.typewritermc.engine.paper.interaction.TriggerHandler
-import com.typewritermc.engine.paper.entry.entries.Event
 
 @Singleton
 class DungeonTriggerHandler : TriggerHandler {
-    override suspend fun trigger(event: Event, currentInteraction: Interaction?) : TriggerContinuation {
+    override suspend fun trigger(event: Event, currentInteraction: Interaction?): TriggerContinuation {
 
         if (DungeonStopTrigger in event && currentInteraction is DungeonInteraction) {
             return TriggerContinuation.Multi(
                 TriggerContinuation.EndInteraction,
-                TriggerContinuation.Append(Event(event.player, currentInteraction.context, currentInteraction.eventTriggers)),
+                TriggerContinuation.Append(
+                    Event(
+                        event.player,
+                        currentInteraction.context,
+                        currentInteraction.eventTriggers
+                    )
+                ),
             )
         }
 
@@ -22,7 +28,7 @@ class DungeonTriggerHandler : TriggerHandler {
 
     private fun tryStartDungeonInteraction(
         event: Event
-    ) : TriggerContinuation {
+    ): TriggerContinuation {
         val triggers = event.triggers
             .filterIsInstance<DungeonStartTrigger>()
 

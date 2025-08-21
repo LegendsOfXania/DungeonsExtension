@@ -4,13 +4,12 @@ import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
-import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.entries.ConstVar
 import com.typewritermc.engine.paper.entry.entries.Var
-import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 import fr.legendsofxania.dungeons.entries.entrytypes.Direction
 import fr.legendsofxania.dungeons.entries.entrytypes.RoomInstanceEntry
+import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 
 @Entry(
     "room_instance",
@@ -26,7 +25,7 @@ import fr.legendsofxania.dungeons.entries.entrytypes.RoomInstanceEntry
  *
  * This could be used to define a room in a dungeon, including its next room(s), artifact, and direction.
  */
-class RoomInstance (
+class RoomInstance(
     override val id: String = "",
     override val name: String = "",
     override val children: List<Var<Ref<RoomInstance>>> = emptyList(),

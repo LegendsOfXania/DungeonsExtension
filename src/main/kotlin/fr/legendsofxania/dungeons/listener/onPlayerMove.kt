@@ -21,6 +21,7 @@ class OnPlayerMoveListener : Listener {
         if (oldState == newState) return
 
         if (newState != null && (oldState == null || newState.room != oldState.room)) {
+            PlayerManager.playerStates[player] = newState
             server.pluginManager.callEvent(OnPlayerJoinRoomEvent(player, newState.room))
         }
 

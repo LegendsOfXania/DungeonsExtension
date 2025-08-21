@@ -12,13 +12,15 @@ import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 interface RoomInstanceEntry : ManifestEntry {
     @Help("The next room(s) of the dungeon. Leave empty if this is the last room.")
     val children: List<Var<Ref<RoomInstance>>>
+
     @Help("The artifact that contains the room's data.")
     val artifact: Var<Ref<RoomArtifact>>
+
     @Help("The direction in which the room will be generated.")
     val direction: Var<Direction>
 }
 
-enum class Direction{
+enum class Direction {
     NORTH,
     SOUTH,
     EAST,

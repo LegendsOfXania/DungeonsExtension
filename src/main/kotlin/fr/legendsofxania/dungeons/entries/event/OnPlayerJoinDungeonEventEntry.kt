@@ -26,7 +26,7 @@ import fr.legendsofxania.dungeons.event.OnPlayerJoinDungeonEvent
  *
  * This could be used to execute a sequence when a player enters a dungeon.
  */
-class OnPlayerJoinDungeonEventEntry (
+class OnPlayerJoinDungeonEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),

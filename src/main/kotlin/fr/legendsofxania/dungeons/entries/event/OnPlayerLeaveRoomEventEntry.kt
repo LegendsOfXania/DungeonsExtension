@@ -26,7 +26,7 @@ import fr.legendsofxania.dungeons.event.OnPlayerLeaveRoomEvent
  *
  * This could be used to execute a sequence when a player leaves a room.
  */
-class OnPlayerLeaveRoomEventEntry (
+class OnPlayerLeaveRoomEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),

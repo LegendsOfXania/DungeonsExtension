@@ -38,7 +38,8 @@ class DungeonInteraction(
 
         val baseLocation = WorldManager.startDungeonInstance()
         val bound = mutableListOf<DungeonRoomBounds>()
-        val dungeonEntry = dungeon.entry ?: return Result.failure(IllegalArgumentException("DungeonInstance entry not found"))
+        val dungeonEntry =
+            dungeon.entry ?: return Result.failure(IllegalArgumentException("DungeonInstance entry not found"))
         val placedRooms = mutableMapOf<String, Location>()
 
         StructureManager.setupRooms(player, context, dungeonEntry.child, placedRooms, baseLocation, bound)
@@ -66,7 +67,8 @@ class DungeonInteraction(
         player.sendMessage("[DEBUG] Ending interaction!")
     }
 
-    private fun shouldEnd(): Boolean = false
+    private fun shouldEnd(): Boolean =
+        PlayerManager.computeDungeonPlayerState(player) == null
 }
 
 data class DungeonStartTrigger(

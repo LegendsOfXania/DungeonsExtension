@@ -26,7 +26,7 @@ import fr.legendsofxania.dungeons.event.OnPlayerJoinRoomEvent
  *
  * This could be used to execute a sequence when a player enters a room.
  */
-class OnPlayerJoinRoomEventEntry (
+class OnPlayerJoinRoomEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),

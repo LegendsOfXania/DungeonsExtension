@@ -26,7 +26,7 @@ import fr.legendsofxania.dungeons.event.OnPlayerLeaveDungeonEvent
  *
  * This could be used to execute a sequence when a player enters a dungeon.
  */
-class OnPlayerLeaveDungeonEventEntry (
+class OnPlayerLeaveDungeonEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),

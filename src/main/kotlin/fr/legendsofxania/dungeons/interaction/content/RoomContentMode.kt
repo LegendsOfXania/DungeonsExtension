@@ -7,20 +7,15 @@ import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.content.ContentComponent
 import com.typewritermc.engine.paper.content.ContentContext
 import com.typewritermc.engine.paper.content.ContentMode
-import com.typewritermc.engine.paper.content.components.IntractableItem
-import com.typewritermc.engine.paper.content.components.ItemComponent
-import com.typewritermc.engine.paper.content.components.ItemInteractionType
-import com.typewritermc.engine.paper.content.components.bossBar
-import com.typewritermc.engine.paper.content.components.exit
-import com.typewritermc.engine.paper.content.components.onInteract
+import com.typewritermc.engine.paper.content.components.*
 import com.typewritermc.engine.paper.content.entryId
+import com.typewritermc.engine.paper.entry.AssetManager
+import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
+import com.typewritermc.engine.paper.plugin
 import com.typewritermc.engine.paper.utils.loreString
 import com.typewritermc.engine.paper.utils.msg
 import com.typewritermc.engine.paper.utils.name
 import com.typewritermc.engine.paper.utils.server
-import com.typewritermc.engine.paper.entry.AssetManager
-import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
-import com.typewritermc.engine.paper.plugin
 import kotlinx.coroutines.Dispatchers
 import net.kyori.adventure.bossbar.BossBar
 import org.bukkit.Location
@@ -63,24 +58,24 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
         """.trimIndent()
                 }
             } onInteract { event ->
-            val location = event.clickedBlock?.location ?: player.location
+                val location = event.clickedBlock?.location ?: player.location
 
-            when (event.type) {
-                ItemInteractionType.LEFT_CLICK -> {
-                    corner1 = location
-                    player.msg("First corner set to <blue>${location.blockCoords()}</blue>.")
-                }
+                when (event.type) {
+                    ItemInteractionType.LEFT_CLICK -> {
+                        corner1 = location
+                        player.msg("First corner set to <blue>${location.blockCoords()}</blue>.")
+                    }
 
-                ItemInteractionType.RIGHT_CLICK -> {
-                    corner2 = location
-                    player.msg("Second corner set to <blue>${location.blockCoords()}</blue>.")
-                }
+                    ItemInteractionType.RIGHT_CLICK -> {
+                        corner2 = location
+                        player.msg("Second corner set to <blue>${location.blockCoords()}</blue>.")
+                    }
 
-                ItemInteractionType.SHIFT_LEFT_CLICK -> {
-                    saveRoom(player, corner1, corner2)
-                }
+                    ItemInteractionType.SHIFT_LEFT_CLICK -> {
+                        saveRoom(player, corner1, corner2)
+                    }
 
-                else -> return@onInteract
+                    else -> return@onInteract
                 }
             }
 

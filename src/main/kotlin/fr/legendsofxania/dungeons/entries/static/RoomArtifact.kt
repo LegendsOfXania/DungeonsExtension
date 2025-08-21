@@ -11,7 +11,8 @@ import fr.legendsofxania.dungeons.interaction.content.RoomContentMode
     "room_artifact",
     "The artifact of a dungeon room",
     Colors.PINK,
-    "tabler:building-bridge-2")
+    "tabler:building-bridge-2"
+)
 @Tags("room_artifact")
 /**
  * The `Room Artifact` entry is used to store the room's data.
@@ -21,7 +22,7 @@ import fr.legendsofxania.dungeons.interaction.content.RoomContentMode
  * This could be used to store the room's data for a Room Definition.
  */
 
-class RoomArtifact (
+class RoomArtifact(
     override val id: String = "",
     override val name: String = "",
     @ContentEditor(RoomContentMode::class)

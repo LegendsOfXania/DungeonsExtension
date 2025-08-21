@@ -10,7 +10,7 @@ import fr.legendsofxania.dungeons.entries.entrytypes.DungeonInstanceEntry
 @Entry(
     "dungeon_instance",
     "The Instance of a dungeon",
-     Colors.ORANGE,
+    Colors.ORANGE,
     "tabler:building"
 )
 @Tags("dungeon_instance")
@@ -21,7 +21,7 @@ import fr.legendsofxania.dungeons.entries.entrytypes.DungeonInstanceEntry
  *
  * This could be used to define a dungeon and the first room(s) of the dungeon.
  */
-class DungeonInstance (
+class DungeonInstance(
     override val id: String = "",
     override val name: String = "",
     override val child: Ref<RoomInstance> = emptyRef(),

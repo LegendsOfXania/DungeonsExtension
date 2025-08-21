@@ -9,7 +9,11 @@ import org.bukkit.WorldCreator
 import org.bukkit.WorldType
 
 object WorldManager {
-    val worldName: String by config("dungeons.world.name", "dungeons", "The name of the world where dungeons will be generated")
+    val worldName: String by config(
+        "dungeons.world.name",
+        "dungeons",
+        "The name of the world where dungeons will be generated"
+    )
     val baseY: Int by config("dungeons.world.baseY", 0, "The base Y level for dungeon instances in the dungeons world")
 
     private val usedIndexes = mutableSetOf<Int>()

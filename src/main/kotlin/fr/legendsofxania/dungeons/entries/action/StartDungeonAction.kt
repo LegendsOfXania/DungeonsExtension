@@ -29,7 +29,7 @@ import fr.legendsofxania.dungeons.interaction.dungeon.DungeonStartTrigger
  * This could be used to start a dungeon for a player, initializing the dungeon's state
  * and preparing him for the adventure.
  */
-class StartDungeonAction (
+class StartDungeonAction(
     override val id: String = "",
     override val name: String = "",
     override val criteria: List<Criteria> = emptyList(),

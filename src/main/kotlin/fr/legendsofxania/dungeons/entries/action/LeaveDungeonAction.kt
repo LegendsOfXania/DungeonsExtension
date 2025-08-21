@@ -26,7 +26,7 @@ import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
  * This could be used to remove a player from a dungeon and stopped the interaction.
  *
  */
-class LeaveDungeonAction (
+class LeaveDungeonAction(
     override val id: String = "",
     override val name: String = "",
     override val criteria: List<Criteria> = emptyList(),
