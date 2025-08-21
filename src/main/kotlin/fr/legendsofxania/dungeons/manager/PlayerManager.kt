@@ -24,13 +24,13 @@ object PlayerManager {
 
     fun computeDungeonPlayerState(player: Player): DungeonPlayerState? {
         val loc = player.location
-        for ((dungeonRef, bounds) in dungeonBounds) {
+        for ((dungeon, bounds) in dungeonBounds) {
             for (roomBounds in bounds) {
                 if (loc.x in roomBounds.minLoc.x..roomBounds.maxLoc.x &&
                     loc.y in roomBounds.minLoc.y..roomBounds.maxLoc.y &&
                     loc.z in roomBounds.minLoc.z..roomBounds.maxLoc.z
                 ) {
-                    return DungeonPlayerState(dungeonRef, roomBounds.room)
+                    return DungeonPlayerState(dungeon, roomBounds.room)
                 }
             }
         }
