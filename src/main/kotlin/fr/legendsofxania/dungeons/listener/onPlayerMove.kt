@@ -1,7 +1,9 @@
 package fr.legendsofxania.dungeons.listener
 
-import fr.legendsofxania.dungeons.manager.PlayerManager.computeDungeonPlayerState
-import fr.legendsofxania.dungeons.manager.PlayerManager.playerStates
+import com.typewritermc.engine.paper.utils.server
+import fr.legendsofxania.dungeons.event.OnPlayerJoinRoomEvent
+import fr.legendsofxania.dungeons.event.OnPlayerLeaveRoomEvent
+import fr.legendsofxania.dungeons.manager.PlayerManager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
@@ -10,17 +12,20 @@ class OnPlayerMoveListener : Listener {
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
-        val player = event.player
-        val newState = computeDungeonPlayerState(player)
+        if (event.from.x == event.to.x && event.from.y == event.to.y && event.from.z == event.to.z) return
 
-        if (newState == null) {
-            playerStates.remove(player)
-            return
+        val player = event.player
+        val oldState = PlayerManager.getPlayerState(player)
+        val newState = PlayerManager.computeDungeonPlayerState(player)
+
+        if (oldState == newState) return
+
+        if (newState != null && (oldState == null || newState.room != oldState.room)) {
+            server.pluginManager.callEvent(OnPlayerJoinRoomEvent(player, newState.room))
         }
 
-        val currentState = playerStates[player]
-        if (currentState?.room?.entry?.id != newState.room.entry?.id || currentState?.dungeon?.entry?.id != newState.dungeon.entry?.id) {
-            playerStates[player] = newState
+        if (oldState != null && (newState == null || oldState.room != newState.room)) {
+            server.pluginManager.callEvent(OnPlayerLeaveRoomEvent(player, oldState.room))
         }
     }
 }
