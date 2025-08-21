@@ -12,7 +12,7 @@ object WorldManager {
     val worldName: String by config("dungeons.world.name", "dungeons", "The name of the world where dungeons will be generated")
     val baseY: Int by config("dungeons.world.baseY", 0, "The base Y level for dungeon instances in the dungeons world")
 
-    private val usedInstances = mutableSetOf<Int>()
+    private val usedIndexes = mutableSetOf<Int>()
     private val availableIndexes = mutableListOf<Int>()
 
     fun worldCreate(): World? {
@@ -32,12 +32,10 @@ object WorldManager {
     fun worldExists(): Boolean = server.getWorld(worldName) != null
 
     fun startDungeonInstance(): Location {
-
-
-        val world = server.getWorld(worldName) ?: throw IllegalStateException("World '$worldName' does not exist.")
+        val world = server.getWorld(worldName) ?: throw IllegalStateException("World \"$worldName\" does not exist.")
 
         val index = getAvailableIndex()
-        usedInstances.add(index)
+        usedIndexes.add(index)
 
         val x = (index % 100) * 1000
         val z = (index / 100) * 1000
@@ -52,7 +50,7 @@ object WorldManager {
         val zIndex = location.blockZ / 1000
         val index = zIndex * 100 + xIndex
 
-        if (usedInstances.remove(index)) {
+        if (usedIndexes.remove(index)) {
             availableIndexes.add(index)
         }
     }
@@ -61,7 +59,7 @@ object WorldManager {
         return if (availableIndexes.isNotEmpty()) {
             availableIndexes.removeFirst()
         } else {
-            (usedInstances.maxOrNull() ?: -1) + 1
+            (usedIndexes.maxOrNull() ?: -1) + 1
         }
     }
 }

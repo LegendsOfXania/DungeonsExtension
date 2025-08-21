@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.events
+package fr.legendsofxania.dungeons.event
 
 import com.typewritermc.core.entries.Ref
 import fr.legendsofxania.dungeons.entries.manifest.RoomInstance

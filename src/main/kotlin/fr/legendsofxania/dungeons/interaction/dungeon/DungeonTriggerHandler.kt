@@ -32,9 +32,9 @@ class DungeonTriggerHandler : TriggerHandler {
 
         return TriggerContinuation.StartInteraction(
             DungeonInteraction(
-                event.player,
                 event.context,
                 trigger.priority,
+                event.player,
                 trigger.eventTriggers,
                 trigger.dungeon
             )

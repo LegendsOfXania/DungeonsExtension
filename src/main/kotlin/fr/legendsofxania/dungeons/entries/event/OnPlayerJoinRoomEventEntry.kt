@@ -11,7 +11,7 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.triggerAllFor
 import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
-import fr.legendsofxania.dungeons.events.OnPlayerJoinRoomEvent
+import fr.legendsofxania.dungeons.event.OnPlayerJoinRoomEvent
 
 @Entry(
     "on_player_join_room_event",

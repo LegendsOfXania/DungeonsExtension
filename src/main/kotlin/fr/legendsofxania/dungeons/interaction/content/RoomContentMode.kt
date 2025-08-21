@@ -105,7 +105,7 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
                 structure.fill(corner1, corner2, true)
 
 
-                val tempFile = File.createTempFile("${plugin.dataFolder.absolutePath}/temp/${entry.artifactId}", ".nbt")
+                val tempFile = File.createTempFile("${plugin.dataFolder.path}/temp/${entry.artifactId}", ".nbt")
                 server.structureManager.saveStructure(tempFile, structure)
 
                 val assetManager = KoinJavaComponent.get<AssetManager>(AssetManager::class.java)

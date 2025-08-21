@@ -6,7 +6,6 @@ import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
 import org.bukkit.entity.Player
 
 data class DungeonPlayerState(
-    val player: Player,
     val dungeon: Ref<DungeonInstance>,
     val room: Ref<RoomInstance>
 )

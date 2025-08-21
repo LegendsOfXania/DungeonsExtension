@@ -7,30 +7,53 @@ import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
+import com.typewritermc.engine.paper.utils.Sync
+import com.typewritermc.engine.paper.utils.server
+import fr.legendsofxania.dungeons.data.DungeonRoomBounds
 import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
-import fr.legendsofxania.dungeons.manager.DungeonManager
+import fr.legendsofxania.dungeons.event.OnPlayerJoinDungeonEvent
+import fr.legendsofxania.dungeons.event.OnPlayerLeaveDungeonEvent
+import fr.legendsofxania.dungeons.manager.PlayerManager
+import fr.legendsofxania.dungeons.manager.StructureManager
+import fr.legendsofxania.dungeons.manager.WorldManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.time.Duration
 
 class DungeonInteraction(
-    val player: Player,
     override val context: InteractionContext,
     override val priority: Int,
+    val player: Player,
     val eventTriggers: List<EventTrigger>,
     val dungeon: Ref<DungeonInstance>
 ) : Interaction {
     override suspend fun initialize(): Result<Unit> {
+        if (!WorldManager.worldExists()) {
+            withContext(Dispatchers.Sync) {
+                WorldManager.worldCreate()
+            }
+        }
 
-        DungeonManager.initialize(player, context, dungeon)
+        val baseLocation = WorldManager.startDungeonInstance()
+        val bound = mutableListOf<DungeonRoomBounds>()
+        val dungeonEntry = dungeon.entry ?: return Result.failure(IllegalArgumentException("DungeonInstance entry not found"))
+        val placedRooms = mutableMapOf<String, Location>()
 
-        player.sendMessage("Starting interaction!")
+        StructureManager.setupRooms(player, context, dungeonEntry.child, placedRooms, baseLocation, bound)
+        PlayerManager.setDungeonBounds(dungeon, bound.toList())
+
+        server.pluginManager.callEvent(OnPlayerJoinDungeonEvent(player, dungeon))
+
+        player.sendMessage("[DEBUG] Starting interaction!")
 
         return ok(Unit)
     }
 
     override suspend fun tick(deltaTime: Duration) {
 
-        player.sendMessage("Ticking interaction!")
+        player.sendMessage("[DEBUG] Ticking interaction!")
         if (shouldEnd()) {
             DungeonStopTrigger.triggerFor(player, context)
         }
@@ -38,7 +61,9 @@ class DungeonInteraction(
 
     override suspend fun teardown(force: Boolean) {
 
-        player.sendMessage("Ending interaction!")
+        server.pluginManager.callEvent(OnPlayerLeaveDungeonEvent(player, dungeon))
+
+        player.sendMessage("[DEBUG] Ending interaction!")
     }
 
     private fun shouldEnd(): Boolean = false

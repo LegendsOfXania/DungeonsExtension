@@ -29,11 +29,8 @@ import fr.legendsofxania.dungeons.entries.entrytypes.RoomInstanceEntry
 class RoomInstance (
     override val id: String = "",
     override val name: String = "",
-    @Help("The next room(s) of the dungeon. Leave empty if this is the last room.")
     override val children: List<Var<Ref<RoomInstance>>> = emptyList(),
-    @Help("The artifact that contains the room's data.")
     override val artifact: Var<Ref<RoomArtifact>> = ConstVar(emptyRef()),
-    @Help("The direction in which the room will be generated.")
     override val direction: Var<Direction> = ConstVar(Direction.NORTH),
 ) : RoomInstanceEntry
 
