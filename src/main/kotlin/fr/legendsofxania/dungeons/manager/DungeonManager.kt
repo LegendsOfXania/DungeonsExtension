@@ -4,6 +4,7 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.core.utils.launch
 import com.typewritermc.engine.paper.entry.AssetManager
+import com.typewritermc.engine.paper.plugin
 import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.server
 import fr.legendsofxania.dungeons.entries.entrytypes.Direction
@@ -82,7 +83,7 @@ object DungeonManager {
         val assetManager = KoinJavaComponent.get<AssetManager>(AssetManager::class.java)
         val binaryData = assetManager.fetchBinaryAsset(artifact) ?: return null
 
-        val tempFile = File.createTempFile("plugins/Typewriter/.temp/${artifact.artifactId}", ".nbt").apply {
+        val tempFile = File.createTempFile("${plugin.dataFolder.absolutePath}/temp/${artifact.artifactId}", ".nbt").apply {
             writeBytes(binaryData)
         }
 

@@ -20,6 +20,7 @@ import com.typewritermc.engine.paper.utils.name
 import com.typewritermc.engine.paper.utils.server
 import com.typewritermc.engine.paper.entry.AssetManager
 import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
+import com.typewritermc.engine.paper.plugin
 import kotlinx.coroutines.Dispatchers
 import net.kyori.adventure.bossbar.BossBar
 import org.bukkit.Location
@@ -103,7 +104,8 @@ class RoomContentMode(context: ContentContext, player: Player) : ContentMode(con
                 val structure = server.structureManager.createStructure()
                 structure.fill(corner1, corner2, true)
 
-                val tempFile = File.createTempFile("plugins/Typewriter/.temp/${entry.artifactId}", ".nbt")
+
+                val tempFile = File.createTempFile("${plugin.dataFolder.absolutePath}/temp/${entry.artifactId}", ".nbt")
                 server.structureManager.saveStructure(tempFile, structure)
 
                 val assetManager = KoinJavaComponent.get<AssetManager>(AssetManager::class.java)
