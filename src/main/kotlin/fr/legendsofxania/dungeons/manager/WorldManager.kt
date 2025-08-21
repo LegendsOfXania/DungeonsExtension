@@ -2,7 +2,7 @@ package fr.legendsofxania.dungeons.manager
 
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.config
-import org.bukkit.Bukkit
+import com.typewritermc.engine.paper.utils.server
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
@@ -16,7 +16,7 @@ object WorldManager {
     private val availableIndexes = mutableListOf<Int>()
 
     fun worldCreate(): World? {
-        if (worldExists()) return Bukkit.getWorld(worldName)
+        if (worldExists()) return server.getWorld(worldName)
 
         val creator = WorldCreator(worldName)
             .type(WorldType.FLAT)
@@ -29,10 +29,12 @@ object WorldManager {
         }
     }
 
-    fun worldExists(): Boolean = Bukkit.getWorld(worldName) != null
+    fun worldExists(): Boolean = server.getWorld(worldName) != null
 
     fun startDungeonInstance(): Location {
-        val world = Bukkit.getWorld(worldName) ?: throw IllegalStateException("World '$worldName' does not exist.")
+
+
+        val world = server.getWorld(worldName) ?: throw IllegalStateException("World '$worldName' does not exist.")
 
         val index = getAvailableIndex()
         usedInstances.add(index)
