@@ -4,21 +4,12 @@ import com.typewritermc.core.entries.Ref
 import fr.legendsofxania.dungeons.data.DungeonPlayerState
 import fr.legendsofxania.dungeons.data.DungeonRoomBounds
 import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
-import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
 import org.bukkit.entity.Player
 import java.util.concurrent.ConcurrentHashMap
 
 object PlayerManager {
     private val dungeonBounds = ConcurrentHashMap<Ref<DungeonInstance>, List<DungeonRoomBounds>>()
     val playerStates = ConcurrentHashMap<Player, DungeonPlayerState>()
-
-    fun updatePlayerState(player: Player, dungeon: Ref<DungeonInstance>, room: Ref<RoomInstance>) {
-        playerStates[player] = DungeonPlayerState(dungeon, room)
-    }
-
-    fun removePlayerState(player: Player) {
-        playerStates.remove(player)
-    }
 
     fun getPlayerState(player: Player): DungeonPlayerState? = playerStates[player]
 
