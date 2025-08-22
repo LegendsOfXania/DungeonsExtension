@@ -12,7 +12,10 @@ class OnPlayerMoveListener : Listener {
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
-        if (event.from.x == event.to.x && event.from.y == event.to.y && event.from.z == event.to.z) return
+        val from = event.from
+        val to = event.to
+
+        if (from.x == to.x && from.y == to.y && from.z == to.z) return
 
         val player = event.player
         val oldState = PlayerManager.getPlayerState(player)
@@ -20,13 +23,17 @@ class OnPlayerMoveListener : Listener {
 
         if (oldState == newState) return
 
-        if (newState != null && (oldState == null || newState.room != oldState.room)) {
-            PlayerManager.playerStates[player] = newState
-            server.pluginManager.callEvent(OnPlayerJoinRoomEvent(player, newState.room))
+        val oldRoom = oldState?.room
+        val newRoom = newState?.room
+
+        when (newState) {
+            null -> PlayerManager.playerStates.remove(player)
+            else -> PlayerManager.playerStates[player] = newState
         }
 
-        if (oldState != null && (newState == null || oldState.room != newState.room)) {
-            server.pluginManager.callEvent(OnPlayerLeaveRoomEvent(player, oldState.room))
+        if (oldRoom != newRoom) {
+            oldRoom?.let { server.pluginManager.callEvent(OnPlayerLeaveRoomEvent(player, it)) }
+            newRoom?.let { server.pluginManager.callEvent(OnPlayerJoinRoomEvent(player, it)) }
         }
     }
 }
