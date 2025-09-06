@@ -38,14 +38,5 @@ class StartDungeonAction(
     @Help("The dungeon to start.")
     val dungeon: Ref<DungeonDefinition> = emptyRef(),
 ) : ActionEntry {
-    override val eventTriggers: List<EventTrigger>
-        get() = listOf(
-            DungeonStartTrigger(
-                this.priority,
-                super.eventTriggers,
-                dungeon
-            )
-        )
-
     override fun ActionTrigger.execute() {}
 }
