@@ -32,11 +32,11 @@ class DungeonInteraction(
         location = WorldManager.startDungeonInstance()
 
         val dungeonEntry = dungeon.entry ?: return Result.failure(IllegalArgumentException("DungeonInstance entry not found"))
-        val bound = mutableListOf<DungeonRoomBounds>()
+        val bounds = mutableListOf<DungeonRoomBounds>()
         val placedRooms = mutableMapOf<String, Location>()
 
-        StructureManager.setupRooms(player, context, dungeonEntry.child, placedRooms, location, bound)
-        PlayerManager.setDungeonBounds(dungeon, bound.toList())
+        StructureManager.setupRooms(player, context, dungeonEntry.child, placedRooms, location, bounds)
+        PlayerManager.setDungeonBounds(dungeon, bounds.toList())
 
         server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, dungeon))
 
@@ -53,8 +53,9 @@ class DungeonInteraction(
     }
 
     override suspend fun teardown(force: Boolean) {
+        val bounds = PlayerManager.getDungeonBounds(dungeon)
+        if (bounds != null) StructureManager.removeRooms(bounds)
 
-        // TODO: Remove player from dungeon & remove structures
         WorldManager.stopDungeonInstance(location)
 
         server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, dungeon))

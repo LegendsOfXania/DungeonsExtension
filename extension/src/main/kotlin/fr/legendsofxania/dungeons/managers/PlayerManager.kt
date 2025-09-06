@@ -29,4 +29,8 @@ object PlayerManager {
     fun setDungeonBounds(dungeon: Ref<DungeonInstance>, bounds: List<DungeonRoomBounds>) {
         dungeonBounds[dungeon] = bounds
     }
+
+    fun getDungeonBounds(dungeon: Ref<DungeonInstance>): List<DungeonRoomBounds>? {
+        return dungeonBounds[dungeon]
+    }
 }

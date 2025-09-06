@@ -12,6 +12,7 @@ import fr.legendsofxania.dungeons.entries.static.RoomArtifact
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.block.structure.Mirror
 import org.bukkit.block.structure.StructureRotation
 import org.bukkit.entity.Player
@@ -30,7 +31,7 @@ object StructureManager {
         roomInstance: Ref<RoomInstance>,
         placedRooms: MutableMap<String, Location>,
         currentLocation: Location,
-        bound: MutableList<DungeonRoomBounds>
+        bounds: MutableList<DungeonRoomBounds>
     ) {
         val roomEntry = roomInstance.entry ?: return
         val artifact = roomEntry.artifact
@@ -57,10 +58,28 @@ object StructureManager {
         val minLoc = roomLocation.clone()
         val maxLoc = roomLocation.clone().add(roomSize.x - 1, roomSize.y - 1, roomSize.z - 1)
 
-        bound.add(DungeonRoomBounds(room = roomInstance, minLoc = minLoc, maxLoc = maxLoc))
+        bounds.add(DungeonRoomBounds(room = roomInstance, minLoc = minLoc, maxLoc = maxLoc))
 
         for (child in roomEntry.children) {
-            setupRooms(player, context, child, placedRooms, roomLocation, bound)
+            setupRooms(player, context, child, placedRooms, roomLocation, bounds)
+        }
+    }
+
+    suspend fun removeRooms(bounds: List<DungeonRoomBounds>) {
+        withContext(Dispatchers.Sync) {
+            for (room in bounds) {
+                val min = room.minLoc
+                val max = room.maxLoc
+
+                for (x in min.blockX..max.blockX) {
+                    for (y in min.blockY..max.blockY) {
+                        for (z in min.blockZ..max.blockZ) {
+                            val block = min.world.getBlockAt(x, y, z)
+                            block.type = Material.AIR
+                        }
+                    }
+                }
+            }
         }
     }
 
