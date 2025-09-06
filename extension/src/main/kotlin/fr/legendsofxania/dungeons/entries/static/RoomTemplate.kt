@@ -1,6 +1,7 @@
 package fr.legendsofxania.dungeons.entries.static
 
 import com.typewritermc.core.books.pages.Colors
+import com.typewritermc.core.extension.annotations.ContentEditor
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
@@ -23,7 +24,6 @@ import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
 class RoomTemplate(
     override val id: String = "",
     override val name: String = "",
+    @ContentEditor(RoomTemplateContentMode::class)
     override val artifactId: String = "",
 ) : ArtifactEntry
-
-// TODO: Create the content mode (need the TemplateManager)
