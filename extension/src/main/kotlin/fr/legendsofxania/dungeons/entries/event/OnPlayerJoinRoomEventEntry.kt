@@ -10,7 +10,7 @@ import com.typewritermc.core.interaction.context
 import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.triggerAllFor
-import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
+import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinRoomEvent
 
 @Entry(
@@ -30,7 +30,7 @@ class OnPlayerJoinRoomEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
-    val room: Ref<RoomInstance> = emptyRef()
+    val room: Ref<RoomDefinition> = emptyRef()
 ) : EventEntry
 
 @EntryListener(OnPlayerJoinRoomEventEntry::class)

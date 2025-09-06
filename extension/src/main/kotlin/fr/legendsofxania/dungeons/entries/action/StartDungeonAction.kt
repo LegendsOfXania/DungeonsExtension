@@ -12,7 +12,7 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.ActionEntry
 import com.typewritermc.engine.paper.entry.entries.ActionTrigger
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
-import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
+import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.interactions.dungeon.DungeonStartTrigger
 
 @Entry(
@@ -36,7 +36,7 @@ class StartDungeonAction(
     override val modifiers: List<Modifier> = emptyList(),
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
     @Help("The dungeon to start.")
-    val dungeon: Ref<DungeonInstance> = emptyRef(),
+    val dungeon: Ref<DungeonDefinition> = emptyRef(),
 ) : ActionEntry {
     override val eventTriggers: List<EventTrigger>
         get() = listOf(
