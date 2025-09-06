@@ -12,7 +12,6 @@ import java.io.ByteArrayOutputStream
 
 object TemplateManager {
     suspend fun saveRoom(player: Player, corner1: Location, corner2: Location, entry: ArtifactEntry) {
-
         val structure = server.structureManager.createStructure()
         structure.fill(corner1, corner2, true)
 

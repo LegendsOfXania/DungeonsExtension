@@ -7,12 +7,7 @@ import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.content.ContentComponent
 import com.typewritermc.engine.paper.content.ContentContext
 import com.typewritermc.engine.paper.content.ContentMode
-import com.typewritermc.engine.paper.content.components.IntractableItem
-import com.typewritermc.engine.paper.content.components.ItemComponent
-import com.typewritermc.engine.paper.content.components.ItemInteractionType
-import com.typewritermc.engine.paper.content.components.bossBar
-import com.typewritermc.engine.paper.content.components.exit
-import com.typewritermc.engine.paper.content.components.onInteract
+import com.typewritermc.engine.paper.content.components.*
 import com.typewritermc.engine.paper.content.entryId
 import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
 import com.typewritermc.engine.paper.utils.loreString
