@@ -9,7 +9,6 @@ import com.typewritermc.engine.paper.content.ContentContext
 import com.typewritermc.engine.paper.content.ContentMode
 import com.typewritermc.engine.paper.content.components.*
 import com.typewritermc.engine.paper.content.entryId
-import com.typewritermc.engine.paper.entry.entries.ArtifactEntry
 import com.typewritermc.engine.paper.utils.loreString
 import com.typewritermc.engine.paper.utils.msg
 import com.typewritermc.engine.paper.utils.name
@@ -24,8 +23,8 @@ import org.bukkit.inventory.ItemStack
 class RoomTemplateContentMode(context: ContentContext, player: Player) : ContentMode(context, player) {
     override suspend fun setup(): Result<Unit> {
         val entry = context.entryId?.let { entryId ->
-            Query.findById<ArtifactEntry>(entryId)
-        } ?: return Result.failure(Exception("Entry ID missing or entry not found"))
+            Query.findById<RoomTemplate>(entryId)
+        } ?: return Result.failure(Exception("Could not find the RoomTemplate entry."))
 
         bossBar {
             title = "Saving Room Template..."
@@ -40,7 +39,7 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
     }
 
     private class SelectionTool(
-        private val entry: ArtifactEntry
+        private val entry: RoomTemplate
     ) : ContentComponent, ItemComponent {
         private var corner1: Location? = null
         private var corner2: Location? = null
@@ -84,8 +83,10 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
                         }
 
                         Dispatchers.UntickedAsync.launch {
-                            TemplateManager.saveRoom(player, c1, c2, entry)
+                            TemplateManager.saveRoom(c1, c2, entry)
                         }
+
+                        player.msg("Room Template saved successfully!")
                     }
 
                     else -> return@onInteract
