@@ -4,6 +4,7 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.Sync
+import fr.legendsofxania.dungeons.data.DungeonInstance
 import fr.legendsofxania.dungeons.entries.manifest.Direction
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ object StructureManager {
     suspend fun placeRooms(
         player: Player,
         context: InteractionContext,
+        instance: DungeonInstance,
         room: Ref<RoomDefinition>,
         loc: Location
     ) {
@@ -41,8 +43,17 @@ object StructureManager {
             )
         }
 
+        val minLocation = location.clone()
+        val maxLocation = location.clone().add(
+            structure.size.blockX - 1.0,
+            structure.size.blockY - 1.0,
+            structure.size.blockZ - 1.0
+        )
+
+        InstancesManager.startRoom(instance, room, minLocation, maxLocation)
+
         for (child in entry.children) {
-            placeRooms(player, context, child, location)
+            placeRooms(player, context, instance, child, location)
         }
     }
 

@@ -1,10 +1,10 @@
 package fr.legendsofxania.dungeons.data
 
+import com.typewritermc.core.entries.Ref
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
-import org.bukkit.Location
+import org.bukkit.util.BoundingBox
 
 data class RoomInstance(
-    val definition: RoomDefinition,
-    val minLocation: Location,
-    val maxLocation: Location
+    val definition: Ref<RoomDefinition>,
+    val box: BoundingBox
 )

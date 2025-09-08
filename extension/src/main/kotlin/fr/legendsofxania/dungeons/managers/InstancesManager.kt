@@ -1,17 +1,52 @@
 package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
-import com.typewritermc.engine.paper.utils.server
+import fr.legendsofxania.dungeons.data.DungeonInstance
+import fr.legendsofxania.dungeons.data.RoomInstance
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
-import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
-import org.bukkit.entity.Player
+import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
+import org.bukkit.Location
+import org.bukkit.util.BoundingBox
+import java.util.*
 
 object InstancesManager {
-    fun startDungeon(
-        player: Player,
-        dungeon: Ref<DungeonDefinition>
-    ) {
+    private val dungeons = mutableMapOf<UUID, DungeonInstance>()
 
-        server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, dungeon))
+    fun startDungeon(
+        dungeon: Ref<DungeonDefinition>,
+        location: Location
+    ): DungeonInstance {
+        val dungeonInstance = DungeonInstance(
+            dungeon,
+            location,
+            mutableListOf()
+        )
+        val id = UUID.randomUUID()
+
+        dungeons[id] = dungeonInstance
+
+        return dungeonInstance
+    }
+
+    fun stopDungeon(instance: DungeonInstance) {
+        val id = dungeons.entries.find { it.value == instance }?. key ?: return
+        val instance = dungeons.remove(id) ?: return
+
+        instance.rooms.clear()
+    }
+
+    fun startRoom(
+        dungeon: DungeonInstance,
+        room: Ref<RoomDefinition>,
+        minLocation: Location,
+        maxLocation: Location
+    ) {
+        val box = BoundingBox.of(minLocation, maxLocation)
+        val roomInstance = RoomInstance(
+            room,
+            box
+        )
+
+        dungeon.rooms.add(roomInstance)
     }
 }
