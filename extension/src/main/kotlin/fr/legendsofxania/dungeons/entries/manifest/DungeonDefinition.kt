@@ -6,7 +6,11 @@ import com.typewritermc.core.entries.emptyRef
 import com.typewritermc.core.extension.annotations.Entry
 import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.core.extension.annotations.Tags
+import com.typewritermc.core.extension.annotations.WithRotation
+import com.typewritermc.core.utils.point.Position
 import com.typewritermc.engine.paper.entry.ManifestEntry
+import com.typewritermc.engine.paper.entry.entries.ConstVar
+import com.typewritermc.engine.paper.entry.entries.Var
 
 @Entry(
     "dungeon_definition",
@@ -27,4 +31,7 @@ class DungeonDefinition(
     override val name: String = "",
     @Help("The first room of the dungeon.")
     val child: Ref<RoomDefinition> = emptyRef(),
+    @Help("The location where players will respawn when they die in the dungeon. (If the location is not in the dungeon, the dungeon instance will be stopped.)")
+    @WithRotation
+    val respawnLocation: Var<Position> = ConstVar(Position.ORIGIN),
 ) : ManifestEntry

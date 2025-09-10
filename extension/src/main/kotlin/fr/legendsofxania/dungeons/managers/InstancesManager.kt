@@ -40,7 +40,7 @@ object InstancesManager {
         room: Ref<RoomDefinition>,
         minLocation: Location,
         maxLocation: Location
-    ) {
+    ): RoomInstance {
         val box = BoundingBox.of(minLocation, maxLocation)
         val roomInstance = RoomInstance(
             room,
@@ -48,5 +48,7 @@ object InstancesManager {
         )
 
         dungeon.rooms.add(roomInstance)
+
+        return roomInstance
     }
 }
