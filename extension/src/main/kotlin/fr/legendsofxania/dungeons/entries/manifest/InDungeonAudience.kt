@@ -10,7 +10,7 @@ import com.typewritermc.engine.paper.entry.entries.AudienceFilterEntry
 import com.typewritermc.engine.paper.entry.entries.Invertible
 import fr.legendsofxania.dungeons.managers.PlayerManager.getDungeon
 import org.bukkit.entity.Player
-import java.util.Optional
+import java.util.*
 
 @Entry("in_dungeon_audience", "Return if a player is in a dungeon or not.", Colors.GREEN, "tabler:building")
 /**
