@@ -20,7 +20,7 @@ import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinRoomEvent
     "carbon:build-image"
 )
 /**
- * The `OnPlayerJoinRoomEventEntry` entry is used to define an event that triggers when a player joins a room.
+ * The `On Player Join Room Event Entry` entry is used to define an event that triggers when a player joins a room.
  *
  * ## How could this be used?
  *

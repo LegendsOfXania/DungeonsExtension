@@ -12,7 +12,14 @@ import fr.legendsofxania.dungeons.managers.PlayerManager.getDungeon
 import org.bukkit.entity.Player
 import java.util.Optional
 
-@Entry("in_dungeon_audience", "Return if a player is in a dungeon or not.", Colors.GREEN, "material-symbols:chat-rounded")
+@Entry("in_dungeon_audience", "Return if a player is in a dungeon or not.", Colors.GREEN, "tabler:building")
+/**
+ * The `In Dungeon Audience` entry is used to check if a player is currently in a dungeon.
+ *
+ * ## How could this be used?
+ *
+ * This could be used to apply effects to players who are in a dungeon.
+ */
 class InDungeonAudience(
     override val id: String = "",
     override val name: String = "",

@@ -15,7 +15,19 @@ import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 import java.util.*
 
+/**
+ * Manages the placement of dungeon structures and rooms.
+ */
 object StructureManager {
+    /**
+     * Recursively places rooms in the dungeon instance starting from the given location.
+     *
+     * @param player The player for whom the rooms are being placed.
+     * @param context The interaction context.
+     * @param instance The dungeon instance where rooms are being placed.
+     * @param room The room definition reference to be placed.
+     * @param loc The starting location for placing the room.
+     */
     suspend fun placeRooms(
         player: Player,
         context: InteractionContext,
@@ -56,6 +68,13 @@ object StructureManager {
         }
     }
 
+    /**
+     * Calculates the offset vector based on the given direction and size.
+     *
+     * @param direction The direction in which to calculate the offset.
+     * @param size The size vector of the structure.
+     * @return The calculated offset vector.
+     */
     private fun getOffset(direction: Direction, size: Vector): Vector {
         return when (direction) {
             Direction.NORTH -> Vector(0.0, 0.0, -size.z)

@@ -7,6 +7,17 @@ import com.typewritermc.engine.paper.interaction.TriggerContinuation
 import com.typewritermc.engine.paper.interaction.TriggerHandler
 
 @Singleton
+/**
+ * The `Dungeon Trigger Handler` is responsible for handling dungeon-related triggers.
+ *
+ * It listens for `DungeonStartTrigger` to initiate a `DungeonInteraction` and for `DungeonStopTrigger`
+ * to terminate an ongoing `DungeonInteraction`.
+ *
+ * ## How could this be used?
+ *
+ * This handler can be used to manage the flow of dungeon interactions based on specific triggers,
+ * allowing for dynamic engagement with dungeon content.
+ */
 class DungeonTriggerHandler : TriggerHandler {
     override suspend fun trigger(event: Event, currentInteraction: Interaction?): TriggerContinuation {
 

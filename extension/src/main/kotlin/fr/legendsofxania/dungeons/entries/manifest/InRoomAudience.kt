@@ -12,7 +12,14 @@ import fr.legendsofxania.dungeons.managers.PlayerManager.getCurrentRoom
 import org.bukkit.entity.Player
 import java.util.Optional
 
-@Entry("in_room_audience", "Return if a player is in a room or not.", Colors.GREEN, "material-symbols:chat-rounded")
+@Entry("in_room_audience", "Return if a player is in a room or not.", Colors.GREEN, "tabler:building-arch")
+/**
+ * The `In Room Audience` entry is used to check if a player is currently in a specific room of a dungeon.
+ *
+ * ## How could this be used?
+ *
+ * This could be used to apply effects to players who are in a specific room of a dungeon.
+ */
 class InRoomAudience(
     override val id: String = "",
     override val name: String = "",

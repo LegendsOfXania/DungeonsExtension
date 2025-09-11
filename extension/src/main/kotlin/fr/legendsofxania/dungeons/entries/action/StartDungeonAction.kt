@@ -22,7 +22,7 @@ import fr.legendsofxania.dungeons.interaction.DungeonStartTrigger
     "carbon:build-image"
 )
 /**
- * The `StartDungeonAction` entry is used to start a dungeon.
+ * The `Start Dungeon Action` entry is used to start a dungeon.
  *
  * ## How could this be used?
  *

@@ -20,7 +20,7 @@ import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveRoomEvent
     "carbon:build-image"
 )
 /**
- * The `OnPlayerLeaveRoomEventEntry` entry is used to define an event that triggers when a player leaves a room.
+ * The `On Player Leave Room Event Entry` entry is used to define an event that triggers when a player leaves a room.
  *
  * ## How could this be used?
  *

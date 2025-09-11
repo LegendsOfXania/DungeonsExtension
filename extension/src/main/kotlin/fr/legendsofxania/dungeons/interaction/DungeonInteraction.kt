@@ -20,6 +20,15 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.time.Duration
 
+/**
+ * Represents a dungeon interaction for a player.
+ *
+ * @param player The player involved in the interaction.
+ * @param context The interaction context.
+ * @param priority The priority of the interaction.
+ * @param eventTriggers The list of event triggers associated with the interaction.
+ * @param dungeon The reference to the dungeon definition.
+ */
 class DungeonInteraction(
     val player: Player,
     override val context: InteractionContext,
@@ -75,6 +84,13 @@ class DungeonInteraction(
     private fun shouldEnd(): Boolean = false
 }
 
+/**
+ * Represents a trigger to start a dungeon interaction.
+ *
+ * @param priority The priority of the trigger.
+ * @param eventTriggers The list of event triggers associated with the dungeon start.
+ * @param dungeon The reference to the dungeon definition.
+ */
 data class DungeonStartTrigger(
     val priority: Int,
     val eventTriggers: List<EventTrigger> = emptyList(),
@@ -83,6 +99,9 @@ data class DungeonStartTrigger(
     override val id: String = "dungeon.start"
 }
 
+/**
+ * Represents a trigger to stop a dungeon interaction.
+ */
 data object DungeonStopTrigger : EventTrigger {
     override val id: String = "dungeon.stop"
 }
