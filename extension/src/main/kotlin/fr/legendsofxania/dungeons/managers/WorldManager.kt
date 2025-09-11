@@ -6,9 +6,13 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.WorldType
-import java.util.PriorityQueue
+import java.util.*
 
-private val worldName: String by config("dungeons.worldName", "dungeons", "The name of the world where instances are generated")
+private val worldName: String by config(
+    "dungeons.worldName",
+    "dungeons",
+    "The name of the world where instances are generated"
+)
 
 object WorldManager {
     private var maxIndex = -1
@@ -16,7 +20,8 @@ object WorldManager {
     private val freeIndexes = PriorityQueue<Int>()
 
     fun startDungeon(): Location {
-        val world = server.getWorld(worldName) ?: createWorld() ?: throw IllegalStateException("Could not create world $worldName")
+        val world = server.getWorld(worldName) ?: createWorld()
+        ?: throw IllegalStateException("Could not create world $worldName")
         val index = getNextIndex()
 
         val x = (index % 100) * 1000

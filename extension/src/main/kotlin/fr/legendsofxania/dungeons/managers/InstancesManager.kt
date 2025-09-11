@@ -1,11 +1,10 @@
 package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
-import fr.legendsofxania.dungeons.data.DungeonInstance
-import fr.legendsofxania.dungeons.data.RoomInstance
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
 import org.bukkit.Location
+import org.bukkit.entity.Player
 import org.bukkit.util.BoundingBox
 import java.util.*
 
@@ -28,13 +27,6 @@ object InstancesManager {
         return dungeonInstance
     }
 
-    fun stopDungeon(instance: DungeonInstance) {
-        val id = dungeons.entries.find { it.value == instance }?. key ?: return
-        val instance = dungeons.remove(id) ?: return
-
-        instance.rooms.clear()
-    }
-
     fun startRoom(
         dungeon: DungeonInstance,
         room: Ref<RoomDefinition>,
@@ -51,4 +43,27 @@ object InstancesManager {
 
         return roomInstance
     }
+
+    fun DungeonInstance.getRoomFor(player: Player): RoomInstance? {
+        val vec = player.location.toVector()
+        return rooms.firstOrNull { it.box.contains(vec) }
+    }
+
+    fun stopDungeon(instance: DungeonInstance) {
+        val id = dungeons.entries.find { it.value == instance }?.key ?: return
+        val instance = dungeons.remove(id) ?: return
+
+        instance.rooms.clear()
+    }
 }
+
+data class DungeonInstance(
+    val definition: Ref<DungeonDefinition>,
+    val location: Location,
+    val rooms: MutableList<RoomInstance>
+)
+
+data class RoomInstance(
+    val definition: Ref<RoomDefinition>,
+    val box: BoundingBox
+)

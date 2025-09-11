@@ -4,7 +4,6 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.Sync
-import fr.legendsofxania.dungeons.data.DungeonInstance
 import fr.legendsofxania.dungeons.entries.manifest.Direction
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
 import kotlinx.coroutines.Dispatchers

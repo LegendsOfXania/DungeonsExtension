@@ -46,5 +46,6 @@ class StartDungeonAction(
                 dungeon
             )
         )
+
     override fun ActionTrigger.execute() {}
 }

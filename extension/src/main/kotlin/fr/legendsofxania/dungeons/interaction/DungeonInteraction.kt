@@ -7,9 +7,13 @@ import com.typewritermc.core.utils.failure
 import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
-import fr.legendsofxania.dungeons.data.DungeonInstance
+import com.typewritermc.engine.paper.utils.server
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
+import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
+import fr.legendsofxania.dungeons.managers.DungeonInstance
 import fr.legendsofxania.dungeons.managers.InstancesManager
+import fr.legendsofxania.dungeons.managers.PlayerManager.setDungeon
 import fr.legendsofxania.dungeons.managers.StructureManager
 import fr.legendsofxania.dungeons.managers.WorldManager
 import org.bukkit.Location
@@ -30,17 +34,21 @@ class DungeonInteraction(
         dungeonLocation = WorldManager.startDungeon()
         dungeonInstance = dungeonLocation?.let { InstancesManager.startDungeon(dungeon, it) }
 
-        dungeonLocation?.let { loc ->
+        dungeonLocation?.let { location ->
             dungeonInstance?.let { instance ->
                 StructureManager.placeRooms(
                     player,
                     context,
                     instance,
                     dungeon.entry?.child ?: return failure("No child room"),
-                    loc
+                    location
                 )
+
+                player.setDungeon(instance)
             } ?: return failure("Could not find the dungeon instance")
         } ?: return failure("Could not find the instance location")
+
+        server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, dungeon))
 
         player.sendMessage("Starting interaction!")
 
@@ -58,6 +66,8 @@ class DungeonInteraction(
     override suspend fun teardown(force: Boolean) {
         dungeonLocation?.let { WorldManager.stopDungeon(it) }
         dungeonInstance?.let { InstancesManager.stopDungeon(it) }
+
+        server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, dungeon))
 
         player.sendMessage("Ending interaction!")
     }
