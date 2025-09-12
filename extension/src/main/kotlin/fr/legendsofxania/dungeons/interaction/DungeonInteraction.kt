@@ -8,6 +8,7 @@ import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
 import com.typewritermc.engine.paper.utils.server
+import com.typewritermc.engine.paper.utils.toBukkitLocation
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
@@ -57,6 +58,10 @@ class DungeonInteraction(
             } ?: return failure("Could not find the dungeon instance")
         } ?: return failure("Could not find the instance location")
 
+        val teleportLocation = dungeon.entry?.respawnLocation?.get(player, context)?.toBukkitLocation()
+        if (teleportLocation == null || !player.teleport(teleportLocation)) {
+            return failure("Could not teleport the player to the dungeon")
+        }
         server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, dungeon))
 
         player.sendMessage("Starting interaction!")
