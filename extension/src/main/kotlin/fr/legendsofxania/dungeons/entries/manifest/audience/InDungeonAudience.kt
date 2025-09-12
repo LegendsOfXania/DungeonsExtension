@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.manifest
+package fr.legendsofxania.dungeons.entries.manifest.audience
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
@@ -8,6 +8,7 @@ import com.typewritermc.engine.paper.entry.entries.AudienceEntry
 import com.typewritermc.engine.paper.entry.entries.AudienceFilter
 import com.typewritermc.engine.paper.entry.entries.AudienceFilterEntry
 import com.typewritermc.engine.paper.entry.entries.Invertible
+import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.managers.PlayerManager.getDungeon
 import org.bukkit.entity.Player
 import java.util.*
