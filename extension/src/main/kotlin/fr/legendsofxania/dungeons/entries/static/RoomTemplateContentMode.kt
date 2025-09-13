@@ -29,7 +29,7 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
         bossBar {
             title = "Saving Room Template..."
             color = BossBar.Color.PINK
-            progress = 0f
+            progress = 1f
         }
 
         exit()
@@ -45,7 +45,7 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
         private var corner2: Location? = null
 
         override fun item(player: Player): Pair<Int, IntractableItem> {
-            val item = ItemStack(Material.BREEZE_ROD).apply {
+            val selectionItem = ItemStack(Material.BREEZE_ROD).apply {
                 editMeta { meta ->
                     meta.name = "<aqua><b>Selection Tool</b></aqua>"
                     meta.loreString = """
@@ -92,7 +92,7 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
                     else -> return@onInteract
                 }
             }
-            return Pair(4, item)
+            return Pair(4, selectionItem)
         }
     }
 }
