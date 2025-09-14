@@ -18,6 +18,8 @@ import org.koin.core.component.inject
 import java.util.*
 
 class StructureManager : KoinComponent {
+    private val instancesManager: InstancesManager by inject()
+
     /**
      * Recursively places rooms in the dungeon instance starting from the given location.
      *
@@ -60,7 +62,6 @@ class StructureManager : KoinComponent {
             structure.size.blockZ - 1.0
         )
 
-        val instancesManager: InstancesManager by inject()
         instancesManager.startRoom(instance, room, minLocation, maxLocation)
 
         for (child in entry.children) {
