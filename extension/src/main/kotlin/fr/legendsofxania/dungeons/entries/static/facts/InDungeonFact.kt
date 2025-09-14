@@ -10,6 +10,7 @@ import com.typewritermc.engine.paper.entry.entries.ReadableFactEntry
 import com.typewritermc.engine.paper.facts.FactData
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.managers.PlayerManager
+import fr.legendsofxania.dungeons.utils.toInt
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -46,6 +47,6 @@ class InDungeonFact(
             playerDungeon != null
         }
 
-        return FactData(isInTargetDungeon.toString().toInt())
+        return FactData(isInTargetDungeon.toInt())
     }
 }

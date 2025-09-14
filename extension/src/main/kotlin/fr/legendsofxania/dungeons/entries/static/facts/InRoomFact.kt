@@ -10,6 +10,7 @@ import com.typewritermc.engine.paper.entry.entries.ReadableFactEntry
 import com.typewritermc.engine.paper.facts.FactData
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
 import fr.legendsofxania.dungeons.managers.PlayerManager
+import fr.legendsofxania.dungeons.utils.toInt
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -46,6 +47,6 @@ class InRoomFact(
             playerRoom != null
         }
 
-        return FactData(isInTargetRoom.toString().toInt())
+        return FactData(isInTargetRoom.toInt())
     }
 }
