@@ -8,11 +8,7 @@ import org.bukkit.WorldCreator
 import org.bukkit.WorldType
 import java.util.*
 
-private val worldName: String by config(
-    "dungeons.worldName",
-    "dungeons",
-    "The name of the world where instances are generated"
-)
+
 
 /**
  * Manages dungeon world instances by allocating and releasing spatial indexes for dungeon placement.
@@ -20,10 +16,16 @@ private val worldName: String by config(
  * Each dungeon instance is placed in a grid layout within a single world, with each cell in the grid
  * being 1000x1000 blocks. The world is created if it does not already exist.
  */
-object WorldManager {
+class WorldManager {
     private var maxIndex = -1
     private val usedIndexes = mutableSetOf<Int>()
     private val freeIndexes = PriorityQueue<Int>()
+
+    private val worldName: String by config(
+        "dungeons.worldName",
+        "dungeons",
+        "The name of the world where instances are generated"
+    )
 
     /**
      * Starts a new dungeon instance by determining its location in the specified world.

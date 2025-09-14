@@ -14,11 +14,13 @@ import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
 import fr.legendsofxania.dungeons.managers.DungeonInstance
 import fr.legendsofxania.dungeons.managers.InstancesManager
-import fr.legendsofxania.dungeons.managers.PlayerManager.setDungeon
+import fr.legendsofxania.dungeons.managers.PlayerManager
 import fr.legendsofxania.dungeons.managers.StructureManager
 import fr.legendsofxania.dungeons.managers.WorldManager
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.time.Duration
 
 /**
@@ -36,17 +38,19 @@ class DungeonInteraction(
     override val priority: Int,
     val eventTriggers: List<EventTrigger>,
     val dungeon: Ref<DungeonDefinition>
-) : Interaction {
+) : Interaction, KoinComponent {
+    private val instancesManager: InstancesManager by inject()
+    private val playerManager: PlayerManager by inject()
     private var dungeonLocation: Location? = null
     private var dungeonInstance: DungeonInstance? = null
 
     override suspend fun initialize(): Result<Unit> {
-        dungeonLocation = WorldManager.startDungeon()
-        dungeonInstance = dungeonLocation?.let { InstancesManager.startDungeon(dungeon, it) }
+        dungeonLocation = WorldManager().startDungeon()
+        dungeonInstance = dungeonLocation?.let { instancesManager.startDungeon(dungeon, it) }
 
         dungeonLocation?.let { location ->
             dungeonInstance?.let { instance ->
-                StructureManager.placeRooms(
+                StructureManager().placeRooms(
                     player,
                     context,
                     instance,
@@ -54,7 +58,7 @@ class DungeonInteraction(
                     location
                 )
 
-                player.setDungeon(instance)
+                playerManager.setDungeon(player, instance)
             } ?: return failure("Could not find the dungeon instance")
         } ?: return failure("Could not find the instance location")
 
@@ -78,8 +82,8 @@ class DungeonInteraction(
     }
 
     override suspend fun teardown(force: Boolean) {
-        dungeonLocation?.let { WorldManager.stopDungeon(it) }
-        dungeonInstance?.let { InstancesManager.stopDungeon(it) }
+        dungeonLocation?.let { WorldManager().stopDungeon(it) }
+        dungeonInstance?.let { instancesManager.stopDungeon(it) }
 
         server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, dungeon))
 

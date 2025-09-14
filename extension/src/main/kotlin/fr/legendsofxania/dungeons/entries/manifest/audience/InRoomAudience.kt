@@ -9,9 +9,12 @@ import com.typewritermc.engine.paper.entry.entries.AudienceFilter
 import com.typewritermc.engine.paper.entry.entries.AudienceFilterEntry
 import com.typewritermc.engine.paper.entry.entries.Invertible
 import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
-import fr.legendsofxania.dungeons.managers.PlayerManager.getCurrentRoom
+import fr.legendsofxania.dungeons.managers.PlayerManager
 import org.bukkit.entity.Player
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
+import kotlin.getValue
 
 @Entry("in_room_audience", "Return if a player is in a room or not.", Colors.GREEN, "tabler:building-arch")
 /**
@@ -35,10 +38,11 @@ class InRoomAudienceFilter(
     private val room: Optional<Ref<RoomDefinition>>,
     private val inverted: Boolean,
     ref: Ref<out AudienceFilterEntry>
-) : AudienceFilter(ref) {
+) : AudienceFilter(ref), KoinComponent {
+    private val playerManager: PlayerManager by inject()
 
     override fun filter(player: Player): Boolean {
-        val playerRoom = player.getCurrentRoom()
+        val playerRoom = playerManager.getCurrentRoom(player)
 
         val isInTargetRoom = if (room.isPresent) {
             val targetRoom = room.get()

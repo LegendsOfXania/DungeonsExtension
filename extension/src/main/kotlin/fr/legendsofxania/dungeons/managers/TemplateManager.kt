@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream
 /**
  * Manages the saving and loading of room templates using structure data.
  */
-object TemplateManager {
+class TemplateManager {
     /**
      * Saves a room structure defined by two corner locations into a RoomTemplate entry.
      *

@@ -13,12 +13,11 @@ import org.bukkit.block.structure.Mirror
 import org.bukkit.block.structure.StructureRotation
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 
-/**
- * Manages the placement of dungeon structures and rooms.
- */
-object StructureManager {
+class StructureManager : KoinComponent {
     /**
      * Recursively places rooms in the dungeon instance starting from the given location.
      *
@@ -37,7 +36,7 @@ object StructureManager {
     ) {
         val entry = room.entry ?: return logger.severe("Could not place the room ${room.id}. Entry not found.")
         val template = entry.template
-        val structure = TemplateManager.loadRoom(template.get(player, context)) ?: return
+        val structure = TemplateManager().loadRoom(template.get(player, context)) ?: return
 
         val offset = getOffset(entry.direction.get(player, context), structure.size)
         val location = loc.clone().add(offset)
@@ -61,7 +60,8 @@ object StructureManager {
             structure.size.blockZ - 1.0
         )
 
-        InstancesManager.startRoom(instance, room, minLocation, maxLocation)
+        val instancesManager: InstancesManager by inject()
+        instancesManager.startRoom(instance, room, minLocation, maxLocation)
 
         for (child in entry.children) {
             placeRooms(player, context, instance, child, location)

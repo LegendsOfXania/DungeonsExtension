@@ -1,12 +1,13 @@
 package fr.legendsofxania.dungeons.managers
 
-import fr.legendsofxania.dungeons.managers.InstancesManager.getRoomFor
+import com.typewritermc.core.extension.annotations.Singleton
 import org.bukkit.entity.Player
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-/**
- * Singleton object to manage players' dungeon and room states.
- */
-object PlayerManager {
+@Singleton
+class PlayerManager : KoinComponent {
+    private val instancesManager: InstancesManager by inject()
     private val dungeonPlayer = mutableMapOf<Player, DungeonPlayer>()
 
     /**
@@ -14,9 +15,9 @@ object PlayerManager {
      *
      * @param dungeon The dungeon instance to assign to the player.
      */
-    fun Player.setDungeon(dungeon: DungeonInstance) {
-        val current = dungeonPlayer[this]
-        dungeonPlayer[this] = DungeonPlayer(
+    fun setDungeon(player: Player, dungeon: DungeonInstance) {
+        val current = dungeonPlayer[player]
+        dungeonPlayer[player] = DungeonPlayer(
             dungeon = dungeon,
             room = current?.room
         )
@@ -27,10 +28,10 @@ object PlayerManager {
      *
      * @param room The new room instance to set for the player.
      */
-    fun Player.setRoom(room: RoomInstance) {
-        val current = dungeonPlayer[this]
+    fun setRoom(player: Player, room: RoomInstance) {
+        val current = dungeonPlayer[player]
             ?: return
-        dungeonPlayer[this] = current.copy(room = room)
+        dungeonPlayer[player] = current.copy(room = room)
     }
 
     /**
@@ -38,8 +39,8 @@ object PlayerManager {
      *
      * @return The dungeon instance if the player is in a dungeon, null otherwise.
      */
-    fun Player.getDungeon(): DungeonInstance? {
-        return dungeonPlayer[this]?.dungeon
+    fun getDungeon(player: Player): DungeonInstance? {
+        return dungeonPlayer[player]?.dungeon
     }
 
     /**
@@ -47,8 +48,8 @@ object PlayerManager {
      *
      * @return The room instance if the player is in a room, null otherwise.
      */
-    fun Player.getCurrentRoom(): RoomInstance? {
-        return dungeonPlayer[this]?.room
+    fun getCurrentRoom(player: Player): RoomInstance? {
+        return dungeonPlayer[player]?.room
     }
 
     /**
@@ -56,16 +57,16 @@ object PlayerManager {
      *
      * @return The room instance if the player is in a room, null otherwise.
      */
-    fun Player.computeRoom(): RoomInstance? {
-        val dungeon = this.getDungeon() ?: return null
-        return dungeon.getRoomFor(this)
+    fun computeRoom(player: Player): RoomInstance? {
+        val dungeon = getDungeon(player) ?: return null
+        return instancesManager.getInstance(player, dungeon)
     }
 
     /**
      * Removes the player from their assigned dungeon and room.
      */
-    fun Player.stopDungeon() {
-        dungeonPlayer.remove(this)
+    fun stopDungeon(player: Player) {
+        dungeonPlayer.remove(player)
     }
 
     /**
@@ -73,8 +74,8 @@ object PlayerManager {
      *
      * @return True if the player is in a dungeon, false otherwise.
      */
-    fun Player.isInDungeon(): Boolean {
-        return dungeonPlayer.containsKey(this)
+    fun isInDungeon(player: Player): Boolean {
+        return dungeonPlayer.containsKey(player)
     }
 
     /**
@@ -82,8 +83,8 @@ object PlayerManager {
      *
      * @return True if the player is in a room, false otherwise.
      */
-    fun Player.isInRoom(): Boolean {
-        return dungeonPlayer[this]?.room != null
+    fun isInRoom(player: Player): Boolean {
+        return dungeonPlayer[player]?.room != null
     }
 }
 

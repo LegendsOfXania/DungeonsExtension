@@ -8,9 +8,6 @@ import fr.legendsofxania.dungeons.listeners.OnPlayerMoveListener
 import org.bukkit.event.player.PlayerMoveEvent
 
 @Singleton
-/**
- * Initializes the dungeon extension by registering necessary event listeners.
- */
 object DungeonInitializer : Initializable {
     override suspend fun initialize() {
         server.pluginManager.registerEvents(OnPlayerMoveListener(), plugin)

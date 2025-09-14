@@ -2,37 +2,34 @@ package fr.legendsofxania.dungeons.listeners
 
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinRoomEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveRoomEvent
-import fr.legendsofxania.dungeons.managers.PlayerManager.computeRoom
-import fr.legendsofxania.dungeons.managers.PlayerManager.getCurrentRoom
-import fr.legendsofxania.dungeons.managers.PlayerManager.isInDungeon
-import fr.legendsofxania.dungeons.managers.PlayerManager.setRoom
-import fr.legendsofxania.dungeons.managers.PlayerManager.stopDungeon
+import fr.legendsofxania.dungeons.managers.PlayerManager
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class OnPlayerMoveListener : Listener {
+class OnPlayerMoveListener : Listener, KoinComponent {
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
-        val player = event.player
-
-        if (!player.isInDungeon()) return
-
         if (event.from.blockX == event.to.blockX &&
             event.from.blockY == event.to.blockY &&
             event.from.blockZ == event.to.blockZ
         ) return
 
-        val oldRoom = player.getCurrentRoom()
-        val newRoom = player.computeRoom()
+        val player = event.player
+        val playerManager: PlayerManager by inject()
+        val oldRoom = playerManager.getCurrentRoom(player)
+        val newRoom = playerManager.computeRoom(player)
 
+        if (!playerManager.isInDungeon(player)) return
         if (oldRoom == newRoom) return
 
         if (newRoom != null) {
-            player.setRoom(newRoom)
+            playerManager.setRoom(player, newRoom)
         } else {
-            player.stopDungeon()
+            playerManager.stopDungeon(player)
         }
 
         if (oldRoom != newRoom) {
