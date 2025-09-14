@@ -10,6 +10,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class OnPlayerMoveListener : Listener, KoinComponent {
+    private val playerManager: PlayerManager by inject()
 
     @EventHandler
     fun onPlayerMove(event: PlayerMoveEvent) {
@@ -19,7 +20,6 @@ class OnPlayerMoveListener : Listener, KoinComponent {
         ) return
 
         val player = event.player
-        val playerManager: PlayerManager by inject()
         val oldRoom = playerManager.getCurrentRoom(player)
         val newRoom = playerManager.computeRoom(player)
 
