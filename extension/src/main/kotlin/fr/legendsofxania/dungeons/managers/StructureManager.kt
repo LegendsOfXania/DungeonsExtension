@@ -4,8 +4,8 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.Sync
-import fr.legendsofxania.dungeons.entries.manifest.Direction
-import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.Direction
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bukkit.Location

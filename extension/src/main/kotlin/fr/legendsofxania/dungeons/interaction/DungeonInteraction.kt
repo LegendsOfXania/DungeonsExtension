@@ -9,7 +9,7 @@ import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
 import com.typewritermc.engine.paper.utils.server
 import com.typewritermc.engine.paper.utils.toBukkitLocation
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
 import fr.legendsofxania.dungeons.managers.*

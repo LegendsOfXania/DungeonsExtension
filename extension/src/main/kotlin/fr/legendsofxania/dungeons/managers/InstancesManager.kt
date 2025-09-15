@@ -2,8 +2,8 @@ package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Singleton
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
-import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.util.BoundingBox

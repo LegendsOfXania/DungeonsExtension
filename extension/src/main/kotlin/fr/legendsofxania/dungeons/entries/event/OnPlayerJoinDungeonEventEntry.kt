@@ -10,7 +10,7 @@ import com.typewritermc.core.interaction.context
 import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.triggerAllFor
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 
 @Entry(

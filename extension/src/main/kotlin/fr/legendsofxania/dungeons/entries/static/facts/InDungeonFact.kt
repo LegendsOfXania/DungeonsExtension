@@ -8,7 +8,7 @@ import com.typewritermc.core.extension.annotations.Help
 import com.typewritermc.engine.paper.entry.entries.GroupEntry
 import com.typewritermc.engine.paper.entry.entries.ReadableFactEntry
 import com.typewritermc.engine.paper.facts.FactData
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.managers.PlayerManager
 import fr.legendsofxania.dungeons.utils.toInt
 import org.bukkit.entity.Player

@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.static
+package fr.legendsofxania.dungeons.entries.static.template
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.extension.annotations.ContentEditor

@@ -8,7 +8,7 @@ import com.typewritermc.engine.paper.entry.entries.AudienceEntry
 import com.typewritermc.engine.paper.entry.entries.AudienceFilter
 import com.typewritermc.engine.paper.entry.entries.AudienceFilterEntry
 import com.typewritermc.engine.paper.entry.entries.Invertible
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.managers.PlayerManager
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent

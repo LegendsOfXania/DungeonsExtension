@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.static
+package fr.legendsofxania.dungeons.entries.static.template
 
 import com.typewritermc.core.entries.Query
 import com.typewritermc.core.utils.UntickedAsync
@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack
 class RoomTemplateContentMode(context: ContentContext, player: Player) : ContentMode(context, player) {
     override suspend fun setup(): Result<Unit> {
         val entry = context.entryId?.let { entryId ->
-            Query.findById<RoomTemplate>(entryId)
+            Query.Companion.findById<RoomTemplate>(entryId)
         } ?: return Result.failure(Exception("Could not find the RoomTemplate entry."))
 
         bossBar {

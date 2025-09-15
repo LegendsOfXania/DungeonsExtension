@@ -3,7 +3,7 @@ package fr.legendsofxania.dungeons.managers
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.engine.paper.entry.entries.binaryData
 import com.typewritermc.engine.paper.utils.server
-import fr.legendsofxania.dungeons.entries.static.RoomTemplate
+import fr.legendsofxania.dungeons.entries.static.template.RoomTemplate
 import org.bukkit.Location
 import org.bukkit.structure.Structure
 import java.io.ByteArrayOutputStream

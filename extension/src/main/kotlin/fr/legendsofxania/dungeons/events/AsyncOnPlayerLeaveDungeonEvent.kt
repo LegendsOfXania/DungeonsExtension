@@ -1,7 +1,7 @@
 package fr.legendsofxania.dungeons.events
 
 import com.typewritermc.core.entries.Ref
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList

@@ -11,7 +11,7 @@ import com.typewritermc.core.utils.point.toPosition
 import com.typewritermc.engine.paper.entry.entries.*
 import com.typewritermc.engine.paper.utils.toPosition
 import com.typewritermc.engine.paper.utils.toWorld
-import fr.legendsofxania.dungeons.entries.manifest.RoomDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import fr.legendsofxania.dungeons.managers.InstancesManager
 import fr.legendsofxania.dungeons.managers.WorldManager
 import org.koin.core.component.KoinComponent

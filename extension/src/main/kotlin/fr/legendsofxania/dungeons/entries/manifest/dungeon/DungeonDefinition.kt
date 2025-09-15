@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.manifest
+package fr.legendsofxania.dungeons.entries.manifest.dungeon
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
@@ -33,5 +33,5 @@ class DungeonDefinition(
     val child: Ref<RoomDefinition> = emptyRef(),
     @Help("The location where players will respawn when they die in the dungeon. (If the location is not in the dungeon, the dungeon instance will be stopped.)")
     @WithRotation
-    val respawnLocation: Var<Position> = ConstVar(Position.ORIGIN),
+    val respawnLocation: Var<Position> = ConstVar(Position.Companion.ORIGIN),
 ) : ManifestEntry

@@ -12,7 +12,7 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.ActionEntry
 import com.typewritermc.engine.paper.entry.entries.ActionTrigger
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
-import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.interaction.DungeonStartTrigger
 
 @Entry(

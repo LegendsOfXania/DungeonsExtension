@@ -1,4 +1,4 @@
-package fr.legendsofxania.dungeons.entries.manifest
+package fr.legendsofxania.dungeons.entries.manifest.dungeon
 
 import com.typewritermc.core.books.pages.Colors
 import com.typewritermc.core.entries.Ref
@@ -10,7 +10,7 @@ import com.typewritermc.core.extension.annotations.Tags
 import com.typewritermc.engine.paper.entry.ManifestEntry
 import com.typewritermc.engine.paper.entry.entries.ConstVar
 import com.typewritermc.engine.paper.entry.entries.Var
-import fr.legendsofxania.dungeons.entries.static.RoomTemplate
+import fr.legendsofxania.dungeons.entries.static.template.RoomTemplate
 
 @Entry(
     "room_definition",
