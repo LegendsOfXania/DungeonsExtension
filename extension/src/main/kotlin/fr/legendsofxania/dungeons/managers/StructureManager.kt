@@ -2,96 +2,81 @@ package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.interaction.InteractionContext
-import com.typewritermc.engine.paper.entry.entries.binaryData
+import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.Sync
-import com.typewritermc.engine.paper.utils.server
-import fr.legendsofxania.dungeons.data.DungeonRoomBounds
-import fr.legendsofxania.dungeons.entries.entrytypes.Direction
-import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
-import fr.legendsofxania.dungeons.entries.static.RoomArtifact
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.Direction
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.block.structure.Mirror
 import org.bukkit.block.structure.StructureRotation
 import org.bukkit.entity.Player
-import org.bukkit.structure.Structure
 import org.bukkit.util.Vector
-import java.io.ByteArrayInputStream
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
-import java.util.concurrent.ConcurrentHashMap
 
-object StructureManager {
-    private val structureCache = ConcurrentHashMap<String, Structure>()
+class StructureManager : KoinComponent {
+    private val instancesManager: InstancesManager by inject()
 
-    suspend fun setupRooms(
+    /**
+     * Recursively places rooms in the dungeon instance starting from the given location.
+     *
+     * @param player The player for whom the rooms are being placed.
+     * @param context The interaction context.
+     * @param instance The dungeon instance where rooms are being placed.
+     * @param room The room definition reference to be placed.
+     * @param loc The starting location for placing the room.
+     */
+    suspend fun placeRooms(
         player: Player,
         context: InteractionContext,
-        roomInstance: Ref<RoomInstance>,
-        placedRooms: MutableMap<String, Location>,
-        currentLocation: Location,
-        bounds: MutableList<DungeonRoomBounds>
+        instance: DungeonInstance,
+        room: Ref<RoomDefinition>,
+        loc: Location
     ) {
-        val roomEntry = roomInstance.entry ?: return
-        val artifact = roomEntry.artifact
-        val structure = loadRoom(artifact.get(player, context)) ?: return
+        val entry = room.entry ?: return logger.severe("Could not place the room ${room.id}. Entry not found.")
+        val template = entry.template
+        val structure = TemplateManager().loadRoom(template.get(player, context)) ?: return
 
-        val roomSize = structure.size
-        val offset = getOffsetFromDirection(roomEntry.direction.get(player, context), roomSize)
-        val roomLocation = currentLocation.clone().add(offset)
+        val offset = getOffset(entry.direction.get(player, context), structure.size)
+        val location = loc.clone().add(offset)
 
         withContext(Dispatchers.Sync) {
             structure.place(
-                roomLocation,
+                location,
                 true,
                 StructureRotation.NONE,
                 Mirror.NONE,
-                0,
+                1,
                 1f,
                 Random()
             )
         }
 
-        placedRooms[roomEntry.id] = roomLocation
+        val minLocation = location.clone()
+        val maxLocation = location.clone().add(
+            structure.size.blockX - 1.0,
+            structure.size.blockY - 1.0,
+            structure.size.blockZ - 1.0
+        )
 
-        val minLoc = roomLocation.clone()
-        val maxLoc = roomLocation.clone().add(roomSize.x - 1, roomSize.y - 1, roomSize.z - 1)
+        instancesManager.startRoom(instance, room, minLocation, maxLocation)
 
-        bounds.add(DungeonRoomBounds(room = roomInstance, minLoc = minLoc, maxLoc = maxLoc))
-
-        for (child in roomEntry.children) {
-            setupRooms(player, context, child, placedRooms, roomLocation, bounds)
+        for (child in entry.children) {
+            placeRooms(player, context, instance, child, location)
         }
     }
 
-    suspend fun removeRooms(bounds: List<DungeonRoomBounds>) {
-        withContext(Dispatchers.Sync) {
-            for (room in bounds) {
-                val min = room.minLoc
-                val max = room.maxLoc
-
-                for (x in min.blockX..max.blockX) {
-                    for (y in min.blockY..max.blockY) {
-                        for (z in min.blockZ..max.blockZ) {
-                            val block = min.world.getBlockAt(x, y, z)
-                            block.type = Material.AIR
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun loadRoom(ref: Ref<RoomArtifact>): Structure? {
-        val artifact = ref.get() ?: return null
-        val data = artifact.binaryData() ?: return null
-
-        structureCache[artifact.artifactId]?.let { return it }
-        return server.structureManager.loadStructure(ByteArrayInputStream(data))
-    }
-
-    private fun getOffsetFromDirection(direction: Direction, size: Vector): Vector {
+    /**
+     * Calculates the offset vector based on the given direction and size.
+     *
+     * @param direction The direction in which to calculate the offset.
+     * @param size The size vector of the structure.
+     * @return The calculated offset vector.
+     */
+    private fun getOffset(direction: Direction, size: Vector): Vector {
         return when (direction) {
             Direction.NORTH -> Vector(0.0, 0.0, -size.z)
             Direction.SOUTH -> Vector(0.0, 0.0, size.z)

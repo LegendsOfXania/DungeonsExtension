@@ -10,7 +10,7 @@ import com.typewritermc.core.interaction.context
 import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.triggerAllFor
-import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveRoomEvent
 
 @Entry(
@@ -20,7 +20,7 @@ import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveRoomEvent
     "carbon:build-image"
 )
 /**
- * The `OnPlayerLeaveRoomEventEntry` entry is used to define an event that triggers when a player leaves a room.
+ * The `On Player Leave Room Event Entry` entry is used to define an event that triggers when a player leaves a room.
  *
  * ## How could this be used?
  *
@@ -30,7 +30,7 @@ class OnPlayerLeaveRoomEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
-    val room: Ref<RoomInstance> = emptyRef()
+    val room: Ref<RoomDefinition> = emptyRef()
 ) : EventEntry
 
 @EntryListener(OnPlayerLeaveRoomEventEntry::class)

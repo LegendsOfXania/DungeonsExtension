@@ -12,8 +12,8 @@ import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.ActionEntry
 import com.typewritermc.engine.paper.entry.entries.ActionTrigger
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
-import fr.legendsofxania.dungeons.entries.manifest.DungeonInstance
-import fr.legendsofxania.dungeons.interactions.dungeon.DungeonStartTrigger
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
+import fr.legendsofxania.dungeons.interaction.DungeonStartTrigger
 
 @Entry(
     "start_dungeon_action",
@@ -22,7 +22,7 @@ import fr.legendsofxania.dungeons.interactions.dungeon.DungeonStartTrigger
     "carbon:build-image"
 )
 /**
- * The `StartDungeonAction` entry is used to start a dungeon.
+ * The `Start Dungeon Action` entry is used to start a dungeon.
  *
  * ## How could this be used?
  *
@@ -36,7 +36,7 @@ class StartDungeonAction(
     override val modifiers: List<Modifier> = emptyList(),
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
     @Help("The dungeon to start.")
-    val dungeon: Ref<DungeonInstance> = emptyRef(),
+    val dungeon: Ref<DungeonDefinition> = emptyRef(),
 ) : ActionEntry {
     override val eventTriggers: List<EventTrigger>
         get() = listOf(

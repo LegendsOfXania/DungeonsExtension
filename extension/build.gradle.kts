@@ -10,7 +10,7 @@ dependencies {}
 
 
 group = "fr.xania"
-version = "0.9.0"
+version = "0.0.1"
 
 typewriter {
     namespace = "legendsofxania"

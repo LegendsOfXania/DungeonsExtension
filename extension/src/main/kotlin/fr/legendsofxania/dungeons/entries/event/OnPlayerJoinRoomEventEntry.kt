@@ -10,7 +10,7 @@ import com.typewritermc.core.interaction.context
 import com.typewritermc.engine.paper.entry.TriggerableEntry
 import com.typewritermc.engine.paper.entry.entries.EventEntry
 import com.typewritermc.engine.paper.entry.triggerAllFor
-import fr.legendsofxania.dungeons.entries.manifest.RoomInstance
+import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinRoomEvent
 
 @Entry(
@@ -20,7 +20,7 @@ import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinRoomEvent
     "carbon:build-image"
 )
 /**
- * The `OnPlayerJoinRoomEventEntry` entry is used to define an event that triggers when a player joins a room.
+ * The `On Player Join Room Event Entry` entry is used to define an event that triggers when a player joins a room.
  *
  * ## How could this be used?
  *
@@ -30,7 +30,7 @@ class OnPlayerJoinRoomEventEntry(
     override val id: String = "",
     override val name: String = "",
     override val triggers: List<Ref<TriggerableEntry>> = emptyList(),
-    val room: Ref<RoomInstance> = emptyRef()
+    val room: Ref<RoomDefinition> = emptyRef()
 ) : EventEntry
 
 @EntryListener(OnPlayerJoinRoomEventEntry::class)
