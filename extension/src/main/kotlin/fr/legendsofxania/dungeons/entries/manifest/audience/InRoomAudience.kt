@@ -14,7 +14,6 @@ import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.*
-import kotlin.getValue
 
 @Entry("in_room_audience", "Return if a player is in a room or not.", Colors.GREEN, "tabler:building-arch")
 /**

@@ -14,7 +14,7 @@ import fr.legendsofxania.dungeons.utils.toInt
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.Optional
+import java.util.*
 
 @Entry("in_room_fact", "If the player is in a room", Colors.PURPLE, "eos-icons:storage-class")
 /**

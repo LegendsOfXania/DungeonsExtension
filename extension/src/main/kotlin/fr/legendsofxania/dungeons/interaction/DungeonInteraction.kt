@@ -12,11 +12,7 @@ import com.typewritermc.engine.paper.utils.toBukkitLocation
 import fr.legendsofxania.dungeons.entries.manifest.DungeonDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
-import fr.legendsofxania.dungeons.managers.DungeonInstance
-import fr.legendsofxania.dungeons.managers.InstancesManager
-import fr.legendsofxania.dungeons.managers.PlayerManager
-import fr.legendsofxania.dungeons.managers.StructureManager
-import fr.legendsofxania.dungeons.managers.WorldManager
+import fr.legendsofxania.dungeons.managers.*
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent

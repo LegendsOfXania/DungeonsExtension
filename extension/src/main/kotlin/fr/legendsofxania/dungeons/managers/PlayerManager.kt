@@ -88,12 +88,6 @@ class PlayerManager : KoinComponent {
     }
 }
 
-/**
- * Data class representing a player's current dungeon and room state.
- *
- * @property dungeon The dungeon instance the player is currently in.
- * @property room The room instance the player is currently in, or null if not in any room.
- */
 data class DungeonPlayer(
     val dungeon: DungeonInstance,
     val room: RoomInstance?

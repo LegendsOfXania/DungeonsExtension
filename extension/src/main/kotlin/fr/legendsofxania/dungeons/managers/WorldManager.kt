@@ -2,12 +2,12 @@ package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.engine.paper.utils.config
 import com.typewritermc.engine.paper.utils.server
+import com.typewritermc.engine.paper.utils.toWorld
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
 import org.bukkit.WorldType
 import java.util.*
-
 
 
 /**
@@ -55,6 +55,15 @@ class WorldManager {
         val zIndex = (location.blockZ / 1000)
         val index = zIndex * 100 + xIndex
         releaseIndex(index)
+    }
+
+    /**
+     * Retrieves the world where dungeon instances are generated.
+     *
+     * @return The World object if it exists, null otherwise.
+     */
+    fun getWorld(): World? {
+        return server.getWorld(worldName)
     }
 
     /**
