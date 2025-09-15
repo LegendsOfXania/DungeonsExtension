@@ -2,7 +2,6 @@ package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.engine.paper.utils.config
 import com.typewritermc.engine.paper.utils.server
-import com.typewritermc.engine.paper.utils.toWorld
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
