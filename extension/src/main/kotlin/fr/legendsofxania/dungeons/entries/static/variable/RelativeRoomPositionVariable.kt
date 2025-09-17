@@ -37,7 +37,9 @@ class RelativeRoomPositionVariable(
         val bukkitWorld = WorldManager().getWorld()
             ?: throw IllegalStateException("Could not find the dungeon world.")
 
-        val position = data.coordinate.get(context.player, context.interactionContext).toPosition(bukkitWorld.toWorld())
+        val coordinate = data.coordinate.get(context.player, context.interactionContext)
+
+        val position = coordinate.toPosition(bukkitWorld.toWorld())
         val roomInstance = instancesManager.getInstance(data.room)
             ?: throw IllegalStateException("Could not find an active instance for room ${data.room.id}.")
 
