@@ -86,7 +86,7 @@ class DungeonInteraction(
         player.sendMessage("Ending interaction!")
     }
 
-    private fun shouldEnd(): Boolean = false
+    private fun shouldEnd(): Boolean = playerManager.isInDungeon(player)
 }
 
 /**
