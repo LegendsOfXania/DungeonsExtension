@@ -23,7 +23,7 @@ import org.koin.core.component.inject
     Colors.GREEN,
     "tabler:arrows-diagonal"
 )
-@VariableData(RelativeRoomPositionVariable::class)
+@VariableData(RelativeRoomPositionVariableData::class)
 class RelativeRoomPositionVariable(
     override val id: String = "",
     override val name: String = "",
