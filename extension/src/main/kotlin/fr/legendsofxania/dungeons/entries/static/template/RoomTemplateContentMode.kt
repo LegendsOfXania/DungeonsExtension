@@ -32,8 +32,8 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
             progress = 1f
         }
 
+        +SelectionTool(entry)
         exit()
-        SelectionTool(entry)
 
         return ok(Unit)
     }
@@ -92,7 +92,7 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
                     else -> return@onInteract
                 }
             }
-            return Pair(4, selectionItem)
+            return 4 to selectionItem
         }
     }
 }
