@@ -78,8 +78,11 @@ class DungeonInteraction(
     }
 
     override suspend fun teardown(force: Boolean) {
+        dungeonInstance?.let {
+            StructureManager().removeRooms(it)
+            instancesManager.stopDungeon(it)
+        }
         dungeonLocation?.let { WorldManager().stopDungeon(it) }
-        dungeonInstance?.let { instancesManager.stopDungeon(it) }
 
         server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, dungeon))
 
