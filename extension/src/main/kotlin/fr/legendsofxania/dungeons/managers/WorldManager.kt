@@ -1,7 +1,10 @@
 package fr.legendsofxania.dungeons.managers
 
+import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.config
 import com.typewritermc.engine.paper.utils.server
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.WorldCreator
@@ -33,8 +36,8 @@ class WorldManager {
      * @return The Location where the dungeon instance starts.
      * @throws IllegalStateException if the world cannot be created.
      */
-    fun startDungeon(): Location {
-        val world = server.getWorld(worldName) ?: createWorld()
+    suspend fun startDungeon(): Location {
+        val world = server.getWorld(worldName) ?: withContext(Dispatchers.Sync) { createWorld() }
         ?: throw IllegalStateException("Could not create world $worldName")
         val index = getNextIndex()
 
