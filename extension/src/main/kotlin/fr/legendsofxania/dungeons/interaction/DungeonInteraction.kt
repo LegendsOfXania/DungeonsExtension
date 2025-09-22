@@ -7,15 +7,11 @@ import com.typewritermc.core.utils.failure
 import com.typewritermc.core.utils.ok
 import com.typewritermc.engine.paper.entry.entries.EventTrigger
 import com.typewritermc.engine.paper.entry.triggerFor
-import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.server
-import com.typewritermc.engine.paper.utils.toBukkitLocation
 import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerJoinDungeonEvent
 import fr.legendsofxania.dungeons.events.AsyncOnPlayerLeaveDungeonEvent
 import fr.legendsofxania.dungeons.managers.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.koin.core.component.KoinComponent
@@ -27,50 +23,45 @@ class DungeonInteraction(
     override val context: InteractionContext,
     override val priority: Int,
     val eventTriggers: List<EventTrigger>,
-    val dungeon: Ref<DungeonDefinition>
+    val ref: Ref<DungeonDefinition>
 ) : Interaction, KoinComponent {
-    private val instancesManager: InstancesManager by inject()
-    private val playerManager: PlayerManager by inject()
     private var dungeonLocation: Location? = null
     private var dungeonInstance: DungeonInstance? = null
 
+    private val worldManager: WorldManager by inject()
+    private val structureManager: StructureManager by inject()
+    private val playerManager: PlayerManager by inject()
+    private val instancesManager: InstancesManager by inject()
+
     override suspend fun initialize(): Result<Unit> {
-        dungeonLocation = WorldManager().startDungeon()
-        dungeonInstance = dungeonLocation?.let { instancesManager.startDungeon(dungeon, it) }
+        val location = worldManager.startDungeon()
+        val instance = instancesManager.startDungeon(ref, location)
+        val room = ref.entry ?: return failure("Could not find the dungeon entry")
 
-        val instance = dungeonInstance ?: return failure("Could not find the dungeon instance")
-        val location = dungeonLocation ?: return failure("Could not find the instance location")
-        val room = dungeon.entry?.child ?: return failure("Could not find the first room of the dungeon")
+        dungeonLocation = location
+        dungeonInstance = instance
 
-        StructureManager().placeRooms(player, context, instance, room, location)
+        structureManager.placeRooms(player, context, instance, room.child, location)
         playerManager.setDungeon(player, instance)
 
-        val bukkitWorld = WorldManager().getWorld() ?: return failure("Could not find the dungeon world")
-        val bukkitLocation = dungeon.entry?.respawnLocation?.get(player, context)?.toBukkitLocation(bukkitWorld)
-        if (bukkitLocation == null || !withContext(Dispatchers.Sync) { player.teleport(bukkitLocation) }) {
-            return failure("Could not teleport the player to the dungeon")
-        }
-        server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, dungeon))
+        server.pluginManager.callEvent(AsyncOnPlayerJoinDungeonEvent(player, ref))
         player.sendMessage("Starting interaction!")
         return ok(Unit)
     }
 
     override suspend fun tick(deltaTime: Duration) {
         player.sendMessage("Ticking interaction...")
-        if (shouldEnd()) DungeonStopTrigger.triggerFor(player, context)
+        if (shouldEnd()) {
+            DungeonStopTrigger.triggerFor(player, context)
+        }
     }
 
     override suspend fun teardown(force: Boolean) {
-        dungeonInstance?.let {
-            StructureManager().removeRooms(it)
-            instancesManager.stopDungeon(it)
-        }
-        dungeonLocation?.let { WorldManager().stopDungeon(it) }
-        server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, dungeon))
+        server.pluginManager.callEvent(AsyncOnPlayerLeaveDungeonEvent(player, ref))
         player.sendMessage("Ending interaction!")
     }
 
-    private fun shouldEnd() = playerManager.isInDungeon(player)
+    private fun shouldEnd(): Boolean = false
 }
 
 data class DungeonStartTrigger(
