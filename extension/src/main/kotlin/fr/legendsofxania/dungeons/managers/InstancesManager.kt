@@ -2,6 +2,7 @@ package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Singleton
+import com.typewritermc.engine.paper.logger
 import fr.legendsofxania.dungeons.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeons.entries.manifest.dungeon.RoomDefinition
 import org.bukkit.Location
@@ -16,22 +17,24 @@ class InstancesManager {
     /**
      * Starts a new dungeon instance at the specified location.
      *
-     * @param dungeon Reference to the dungeon definition.
+     * @param ref Reference to the dungeon definition.
      * @param location The location where the dungeon instance will be placed.
      * @return The created DungeonInstance.
      */
     fun startDungeon(
-        dungeon: Ref<DungeonDefinition>,
+        ref: Ref<DungeonDefinition>,
         location: Location
     ): DungeonInstance {
         val dungeonInstance = DungeonInstance(
-            dungeon,
+            ref,
             location,
             mutableListOf()
         )
         val id = UUID.randomUUID()
 
         dungeons[id] = dungeonInstance
+
+        logger.info("Started dungeon instance for $ref")
 
         return dungeonInstance
     }
@@ -40,24 +43,26 @@ class InstancesManager {
      * Starts a new room instance within the specified dungeon.
      *
      * @param dungeon The dungeon instance where the room will be added.
-     * @param room Reference to the room definition.
+     * @param ref Reference to the room definition.
      * @param minLocation The minimum corner location of the room's bounding box.
      * @param maxLocation The maximum corner location of the room's bounding box.
      * @return The created RoomInstance.
      */
     fun startRoom(
         dungeon: DungeonInstance,
-        room: Ref<RoomDefinition>,
+        ref: Ref<RoomDefinition>,
         minLocation: Location,
         maxLocation: Location
     ): RoomInstance {
         val box = BoundingBox.of(minLocation, maxLocation)
         val roomInstance = RoomInstance(
-            room,
+            ref,
             box
         )
 
         dungeon.rooms.add(roomInstance)
+
+        logger.info("Started room instance for $ref at $box in dungeon ${dungeon.definition}")
 
         return roomInstance
     }
@@ -81,7 +86,9 @@ class InstancesManager {
      * @return The RoomInstance if found, null otherwise.
      */
     fun getInstance(ref: Ref<RoomDefinition>): RoomInstance? {
-        return dungeons.values.flatMap { it.rooms }.firstOrNull { it.definition == ref }
+        val active = dungeons.values.flatMap { it.rooms }
+        logger.info("Looking for room ${ref.id}, active=${active.map { it.definition.id }}")
+        return active.firstOrNull { it.definition == ref }
     }
 
     /**
@@ -94,6 +101,15 @@ class InstancesManager {
     fun getInstance(player: Player, dungeon: DungeonInstance): RoomInstance? {
         val vec = player.location.toVector()
         return dungeon.rooms.firstOrNull { it.box.contains(vec) }
+    }
+
+    /**
+     * Retrieves all active dungeon instances.
+     *
+     * @return A collection of all DungeonInstance objects.
+     */
+    fun getInstances(): Collection<DungeonInstance> {
+        return dungeons.values
     }
 }
 

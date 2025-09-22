@@ -41,7 +41,7 @@ class RelativeRoomPositionVariable(
 
         val position = coordinate.toPosition(bukkitWorld.toWorld())
         val roomInstance = instancesManager.getInstance(data.room)
-            ?: throw IllegalStateException("Could not find an active instance for room ${data.room.id}.")
+            ?: throw IllegalStateException("Could not find an active instance for room ${data.room.id}. Active instances: ${instancesManager.getInstances()}")
 
         val origin = roomInstance.box.min.toLocation(bukkitWorld).toPosition()
 
