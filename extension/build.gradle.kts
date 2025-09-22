@@ -23,7 +23,7 @@ typewriter {
             |Simple or Jigsaw Dungeons in Typewriter.
             |Create by the Legends of Xania.
             """.trimMargin()
-        engineVersion = "0.9.0-beta-162"
+        engineVersion = "0.9.0-beta-165"
         channel = com.typewritermc.moduleplugin.ReleaseChannel.BETA
 
         dependencies {
