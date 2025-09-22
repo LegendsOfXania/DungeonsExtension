@@ -63,7 +63,7 @@ class StructureManager : KoinComponent {
                 true,
                 StructureRotation.NONE,
                 Mirror.NONE,
-                1,
+                0,
                 1f,
                 Random()
             )
