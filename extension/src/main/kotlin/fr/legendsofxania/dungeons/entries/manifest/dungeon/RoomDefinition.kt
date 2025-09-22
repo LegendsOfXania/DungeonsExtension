@@ -34,7 +34,6 @@ class RoomDefinition(
     @Help("The template that contains the room's data.")
     val template: Var<Ref<RoomTemplate>> = ConstVar(emptyRef()),
     @Help("The direction in which the room will be generated.")
-    @Default("NORTH")
     val direction: Var<Direction> = ConstVar(Direction.NORTH),
 ) : ManifestEntry
 
