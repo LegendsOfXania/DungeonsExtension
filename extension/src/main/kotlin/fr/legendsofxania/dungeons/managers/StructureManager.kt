@@ -1,6 +1,7 @@
 package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
+import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.core.interaction.InteractionContext
 import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.Sync
@@ -18,7 +19,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.*
 
+@Singleton
 class StructureManager : KoinComponent {
+    private val templateManager: TemplateManager by inject()
     private val instancesManager: InstancesManager by inject()
 
     /**
@@ -27,22 +30,32 @@ class StructureManager : KoinComponent {
      * @param player The player for whom the rooms are being placed.
      * @param context The interaction context.
      * @param instance The dungeon instance where rooms are being placed.
-     * @param room The room definition reference to be placed.
+     * @param ref The room definition reference to be placed.
      * @param loc The starting location for placing the room.
      */
     suspend fun placeRooms(
         player: Player,
         context: InteractionContext,
         instance: DungeonInstance,
-        room: Ref<RoomDefinition>,
+        ref: Ref<RoomDefinition>,
         loc: Location
     ) {
-        val entry = room.entry ?: return logger.severe("Could not place the room ${room.id}. Entry not found.")
+        val entry = ref.entry
+            ?: throw NullPointerException("Could not find room entry for $ref")
         val template = entry.template
-        val structure = TemplateManager().loadRoom(template.get(player, context)) ?: return
+        val structure = templateManager.loadRoom(template.get(player, context))
+            ?: throw NullPointerException("Could not load structure for template $template.")
 
         val offset = getOffset(entry.direction.get(player, context), structure.size)
         val location = loc.clone().add(offset)
+        val minLocation = location.clone()
+        val maxLocation = location.clone().add(
+            structure.size.blockX - 1.0,
+            structure.size.blockY - 1.0,
+            structure.size.blockZ - 1.0
+        )
+
+        instancesManager.startRoom(instance, ref, minLocation, maxLocation)
 
         withContext(Dispatchers.Sync) {
             structure.place(
@@ -55,15 +68,6 @@ class StructureManager : KoinComponent {
                 Random()
             )
         }
-
-        val minLocation = location.clone()
-        val maxLocation = location.clone().add(
-            structure.size.blockX - 1.0,
-            structure.size.blockY - 1.0,
-            structure.size.blockZ - 1.0
-        )
-
-        instancesManager.startRoom(instance, room, minLocation, maxLocation)
 
         for (child in entry.children) {
             placeRooms(player, context, instance, child, location)

@@ -1,16 +1,17 @@
 package fr.legendsofxania.dungeons.managers
 
 import com.typewritermc.core.entries.Ref
+import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.engine.paper.entry.entries.binaryData
+import com.typewritermc.engine.paper.entry.entries.hasData
+import com.typewritermc.engine.paper.logger
 import com.typewritermc.engine.paper.utils.server
 import fr.legendsofxania.dungeons.entries.static.template.RoomTemplate
 import org.bukkit.Location
 import org.bukkit.structure.Structure
 import java.io.ByteArrayOutputStream
 
-/**
- * Manages the saving and loading of room templates using structure data.
- */
+@Singleton
 class TemplateManager {
     /**
      * Saves a room structure defined by two corner locations into a RoomTemplate entry.
@@ -36,13 +37,19 @@ class TemplateManager {
     /**
      * Loads a room structure from a RoomTemplate entry.
      *
-     * @param entry The RoomTemplate entry containing the structure data.
+     * @param ref The RoomTemplate entry containing the structure data.
      * @return The loaded Structure, or null if loading fails.
      */
-    suspend fun loadRoom(entry: Ref<RoomTemplate>): Structure? {
-        val data = entry.get()?.binaryData() ?: return null
-        val inputStream = data.inputStream()
+    suspend fun loadRoom(ref: Ref<RoomTemplate>): Structure? {
+        logger.info("Loading structure for template $ref...")
+        val entry = ref.entry ?: return null
 
-        return server.structureManager.loadStructure(inputStream)
+        if (entry.hasData()) {
+            logger.info("Found structure data for template $ref, loading...")
+            val inputStream = entry.binaryData()?.inputStream() ?: return null
+            return server.structureManager.loadStructure(inputStream)
+        }
+        logger.info("No structure data found for template $ref.")
+        return null
     }
 }

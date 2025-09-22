@@ -1,5 +1,6 @@
 package fr.legendsofxania.dungeons.managers
 
+import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.engine.paper.utils.Sync
 import com.typewritermc.engine.paper.utils.config
 import com.typewritermc.engine.paper.utils.server
@@ -18,6 +19,7 @@ import java.util.*
  * Each dungeon instance is placed in a grid layout within a single world, with each cell in the grid
  * being 1000x1000 blocks. The world is created if it does not already exist.
  */
+@Singleton
 class WorldManager {
     private var maxIndex = -1
     private val usedIndexes = mutableSetOf<Int>()
