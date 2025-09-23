@@ -2,7 +2,6 @@ package fr.legendsofxania.dungeon.managers
 
 import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Singleton
-import com.typewritermc.engine.paper.logger
 import fr.legendsofxania.dungeon.entries.manifest.dungeon.DungeonDefinition
 import fr.legendsofxania.dungeon.entries.manifest.dungeon.RoomDefinition
 import org.bukkit.Location
@@ -32,9 +31,7 @@ class InstancesManager {
         )
         val id = UUID.randomUUID()
 
-        dungeons[id] = dungeonInstance
-
-        logger.info("Started dungeon instance for $ref")
+        dungeons[id] = dungeonInstance 
 
         return dungeonInstance
     }
@@ -62,8 +59,6 @@ class InstancesManager {
 
         dungeon.rooms.add(roomInstance)
 
-        logger.info("Started room instance for $ref at $box in dungeon ${dungeon.definition}")
-
         return roomInstance
     }
 
@@ -87,7 +82,6 @@ class InstancesManager {
      */
     fun getInstance(ref: Ref<RoomDefinition>): RoomInstance? {
         val active = dungeons.values.flatMap { it.rooms }
-        logger.info("Looking for room ${ref.id}, active=${active.map { it.definition.id }}")
         return active.firstOrNull { it.definition == ref }
     }
 
