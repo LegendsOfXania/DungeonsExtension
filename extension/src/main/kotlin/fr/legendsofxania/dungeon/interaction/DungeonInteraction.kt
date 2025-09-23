@@ -64,7 +64,7 @@ class DungeonInteraction(
         if (shouldEnd()) DungeonStopTrigger.triggerFor(player, context)
     }
 
-    override suspend fun teardown(force: Boolean) {
+    override suspend fun teardown() {
         dungeonInstance?.let {
             structureManager.removeRooms(it)
             instancesManager.stopDungeon(it)
