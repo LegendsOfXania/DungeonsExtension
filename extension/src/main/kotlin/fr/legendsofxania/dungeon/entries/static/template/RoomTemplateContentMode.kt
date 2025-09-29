@@ -87,10 +87,8 @@ class RoomTemplateContentMode(context: ContentContext, player: Player) : Content
                         }
 
                         Dispatchers.UntickedAsync.launch {
-                            templateManager.saveRoom(c1, c2, entry)
+                            templateManager.saveRoom(player, c1, c2, entry)
                         }
-
-                        player.msg("Room Template saved successfully!")
                     }
 
                     else -> return@onInteract

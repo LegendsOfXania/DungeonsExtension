@@ -4,10 +4,11 @@ import com.typewritermc.core.entries.Ref
 import com.typewritermc.core.extension.annotations.Singleton
 import com.typewritermc.engine.paper.entry.entries.binaryData
 import com.typewritermc.engine.paper.entry.entries.hasData
-import com.typewritermc.engine.paper.logger
+import com.typewritermc.engine.paper.utils.msg
 import com.typewritermc.engine.paper.utils.server
 import fr.legendsofxania.dungeon.entries.static.template.RoomTemplate
 import org.bukkit.Location
+import org.bukkit.entity.Player
 import org.bukkit.structure.Structure
 import java.io.ByteArrayOutputStream
 
@@ -21,6 +22,7 @@ class TemplateManager {
      * @param entry The RoomTemplate entry where the structure data will be saved.
      */
     suspend fun saveRoom(
+        player: Player,
         corner1: Location,
         corner2: Location,
         entry: RoomTemplate
@@ -32,6 +34,8 @@ class TemplateManager {
         server.structureManager.saveStructure(outputStream, structure)
 
         entry.binaryData(outputStream.toByteArray())
+
+        player.msg("Room Template saved successfully.")
     }
 
     /**

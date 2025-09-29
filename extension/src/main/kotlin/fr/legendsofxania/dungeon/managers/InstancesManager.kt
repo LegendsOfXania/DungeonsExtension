@@ -31,7 +31,7 @@ class InstancesManager {
         )
         val id = UUID.randomUUID()
 
-        dungeons[id] = dungeonInstance 
+        dungeons[id] = dungeonInstance
 
         return dungeonInstance
     }
