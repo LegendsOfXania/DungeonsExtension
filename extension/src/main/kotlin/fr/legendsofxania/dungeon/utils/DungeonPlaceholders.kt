@@ -16,7 +16,5 @@ class DungeonPlaceholders : PlaceholderHandler, KoinComponent {
         if (params != "in_dungeon") return null
 
         return if (playerManager.isInDungeon(player)) "1" else "0"
-
-
     }
 }
