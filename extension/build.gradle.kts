@@ -8,7 +8,6 @@ plugins {
 repositories {}
 dependencies {}
 
-
 group = "fr.xania"
 version = "0.0.1"
 
@@ -23,7 +22,7 @@ typewriter {
             |Simple or Jigsaw Dungeons in Typewriter.
             |Create by the Legends of Xania.
             """.trimMargin()
-        engineVersion = "0.9.0-beta-165"
+        engineVersion = "0.9.0-beta-166"
         channel = com.typewritermc.moduleplugin.ReleaseChannel.BETA
 
         dependencies {
